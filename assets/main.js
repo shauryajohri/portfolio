@@ -10,9 +10,20 @@ const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------------------------------------------------------- LOADER */
 const LOAD_MSGS = ['Loading Projects...','Loading AI Models...','Loading Memories...','Loading Creativity...'];
 function runLoader(){
-  const btn=$('#enterBtn');
-  const cinematicTime = reduced ? 1200 : 24000;
-  setTimeout(()=>$('#loader').classList.add('cinematic-ready'), cinematicTime * .72);
+  const bar=$('.load-fill'), msg=$('.load-msg'), pct=$('.load-pct'), btn=$('#enterBtn');
+  let p=0, i=0;
+  msg.textContent = LOAD_MSGS[0];
+  const total = reduced ? 900 : 2800;
+  const step = 60;
+  const t = setInterval(()=>{
+    p += 100/(total/step);
+    if(p>=100){p=100;clearInterval(t);}
+    bar.style.width=p+'%';
+    pct.textContent=Math.floor(p)+'%';
+    const idx=Math.min(LOAD_MSGS.length-1,Math.floor(p/25));
+    if(idx!==i){i=idx;msg.textContent=LOAD_MSGS[i];}
+    if(p>=100){msg.textContent='Ready.';btn.classList.add('show');}
+  },step);
   btn.addEventListener('click',()=>{
     $('#loader').classList.add('gone');
     document.body.classList.remove('locked');
