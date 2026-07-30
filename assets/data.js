@@ -248,7 +248,6 @@ const TIMELINE = [
   ['2026','Internship','Applying the work in a professional environment.'],
   ['2026','SmartConnect','Designing a real-time multiplayer educational metaverse — the first project built as much for research as for shipping.'],
   ['2026','Digital Twin','Smart City digital twin: 3D visualisation over live IoT and AI analytics.'],
-  ['2026','Japan Preparation','Language, culture and the goal — software engineering in Japan.']
 ];
 
 const ACHIEVEMENTS = [
