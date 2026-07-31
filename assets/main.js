@@ -372,6 +372,25 @@ function reveal(){
   $$('.rise').forEach(el=>io.observe(el));
 }
 
+/* ---------------------------------------------------------- SCROLL PROLOGUE */
+function prologue(){
+  const root=$('#prologue'); if(!root) return;
+  const stage=$('.prologue-stage',root), phases=$$('.prologue-phase',root), identity=$('.identity-word',root);
+  const hour=new Date().getHours();
+  const greeting=hour<12?['おはようございます。','Good Morning.']:hour<18?['こんにちは。','Good Afternoon.']:['こんばんは。','Good Evening.'];
+  $('.jp-greeting',root).textContent=greeting[0]; $('.en-greeting',root).textContent=greeting[1];
+  const roles=['Software Developer.','AI Engineer.','System Designer.','World Builder.'];
+  let last=-1;
+  function update(){
+    const rect=root.getBoundingClientRect(), progress=Math.max(0,Math.min(1,-rect.top/(root.offsetHeight-innerHeight)));
+    let index=progress<.18?0:progress<.34?1:progress<.57?2:progress<.78?3:4;
+    if(index!==last){phases.forEach(p=>p.classList.remove('active'));phases[index].classList.add('active');last=index;}
+    if(index===2){const role=Math.min(3,Math.floor((progress-.34)/.057));identity.textContent=roles[role];}
+    stage.classList.toggle('cut',progress>.82);
+  }
+  addEventListener('scroll',update,{passive:true}); update();
+}
+
 /* ---------------------------------------------------------- BOOT */
 document.addEventListener('DOMContentLoaded',()=>{
   document.body.classList.add('locked');
@@ -379,6 +398,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   orbitNodes(); drones(); npcs();
   commandCenter(); timeline(); achievements(); counters(); lanterns();
   mapNav(); reveal();
+  prologue();
   document.addEventListener('click',e=>{
     const t=e.target.closest('[data-project]');
     if(t) openProject(t.dataset.project);
