@@ -1,0 +1,98 @@
+.scene{
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background: #05030c;
+  --mx: 0;
+  --my: 0;
+}
+
+.canvas{
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas svg{
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* parallax layers — depth increases toward the viewer */
+.layer{
+  will-change: transform;
+  transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.d1{ transform: translate3d(calc(var(--mx) * 6px), calc(var(--my) * 4px), 0); }
+.d2{ transform: translate3d(calc(var(--mx) * 14px), calc(var(--my) * 8px), 0); }
+.d3{ transform: translate3d(calc(var(--mx) * 26px), calc(var(--my) * 13px), 0); }
+.d4{ transform: translate3d(calc(var(--mx) * 40px), calc(var(--my) * 20px), 0); }
+.d5{ transform: translate3d(calc(var(--mx) * 58px), calc(var(--my) * 26px), 0); }
+
+/* the dragon breathes */
+.breath{
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: breathe 7s ease-in-out infinite;
+}
+
+@keyframes breathe{
+  0%, 100%{ transform: scale(1, 1); }
+  50%     { transform: scale(1.012, 1.028); }
+}
+
+.emberDrift{
+  animation: rise 9s ease-in-out infinite;
+}
+
+@keyframes rise{
+  0%   { transform: translateY(0); opacity: 0; }
+  20%  { opacity: 0.8; }
+  100% { transform: translateY(-120px); opacity: 0; }
+}
+
+.twinkle{
+  animation: tw 4.5s ease-in-out infinite;
+}
+
+@keyframes tw{
+  0%, 100%{ opacity: 0.25; }
+  50%     { opacity: 0.9; }
+}
+
+.auraSpin{
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: spin 62s linear infinite;
+}
+
+@keyframes spin{
+  to{ transform: rotate(360deg); }
+}
+
+/* content sits above the art */
+.content{
+  position: relative;
+  z-index: 5;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: var(--gutter);
+  pointer-events: none;
+}
+
+.content > *{ pointer-events: auto; }
+
+@media (prefers-reduced-motion: reduce){
+  .layer{ transform: none !important; }
+  .breath,
+  .emberDrift,
+  .twinkle,
+  .auraSpin{ animation: none; }
+}
