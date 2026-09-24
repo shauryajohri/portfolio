@@ -1,0 +1,628 @@
+/* ═══════════════════════════════════════════════════════════════
+   THE OPEN BOOK
+   Desktop: a two-page spread — plate left, chapter right.
+   Mobile (<880px): one page — plate on top, chapter below.
+   ═══════════════════════════════════════════════════════════════ */
+
+.shell{
+  min-height: 100svh;
+  overflow-x: clip;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── top bar ───────────────────────────────────────────────── */
+
+.bar{
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: linear-gradient(180deg, rgba(7, 6, 26, 0.92), rgba(7, 6, 26, 0));
+}
+
+.brand{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 2px;
+}
+.brandName{
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: var(--gold-lt);
+}
+.brandRole{
+  font-size: 0.72rem;
+  color: var(--moon-3);
+  letter-spacing: 0.04em;
+}
+
+.barNav{
+  display: flex;
+  align-items: center;
+  gap: clamp(4px, 1.5vw, 14px);
+}
+.barLink{
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--moon-2);
+  text-decoration: none;
+  padding: 8px 10px;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+}
+.barLink:hover{ color: var(--moon); background: rgba(255, 255, 255, 0.05); }
+.barCta{
+  color: var(--night);
+  background: var(--gold);
+  padding: 8px 16px;
+}
+.barCta:hover{ color: var(--night); background: var(--gold-lt); }
+
+.toc{ position: relative; }
+.tocList{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 280px;
+  padding: 10px;
+  background: var(--night-2);
+  border: 1px solid rgba(201, 162, 74, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.tocList a{
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: var(--font-book);
+  font-size: 1.05rem;
+  color: var(--moon);
+}
+.tocList a:hover,
+.tocList a[aria-current]{ background: rgba(201, 162, 74, 0.12); }
+.tocNum{ font-family: var(--font-display); font-size: 0.8rem; color: var(--gold); }
+.tocLabel{ font-family: var(--font-ui); font-size: 0.72rem; color: var(--moon-3); }
+
+/* ── stage & book ──────────────────────────────────────────── */
+
+.stage{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 8px clamp(16px, 3vw, 40px) 24px;
+}
+
+.book{
+  position: relative;
+  width: min(1240px, 100%);
+  height: clamp(520px, calc(100svh - 170px), 800px);
+  display: grid;
+  grid-template-columns: 1fr 22px 1fr;
+  perspective: 2400px;
+  filter: drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55)) drop-shadow(0 0 80px var(--arcane-glow));
+}
+
+.pageLeft,
+.pageRight{
+  position: relative;
+  background:
+    radial-gradient(ellipse at 50% 40%, transparent 55%, rgba(120, 90, 50, 0.18)),
+    linear-gradient(180deg, var(--parchment), var(--parchment-2));
+  color: var(--ink);
+}
+.pageLeft{
+  border-radius: 10px 2px 2px 10px;
+  padding: 36px 30px 44px 40px;
+  box-shadow: inset -30px 0 40px -30px rgba(80, 55, 25, 0.45);
+}
+.pageRight{
+  border-radius: 2px 10px 10px 2px;
+  padding: 44px clamp(28px, 4vw, 56px) 52px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--parchment-edge) transparent;
+  box-shadow: inset 30px 0 40px -30px rgba(80, 55, 25, 0.45);
+}
+.pageRight:focus{ outline: none; }
+
+.spine{
+  background: linear-gradient(90deg, #b39c6f, #6e5634 45%, #4a371f 50%, #6e5634 55%, #b39c6f);
+}
+
+.folio{
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-book);
+  font-size: 0.85rem;
+  color: var(--ink-3);
+}
+.folioRight{ position: static; display: block; text-align: center; transform: none; margin-top: 28px; }
+
+/* ── page turn ─────────────────────────────────────────────── */
+
+.turnIn{
+  animation: turnIn 0.55s var(--ease) 0.18s both;
+}
+.pageLeft .turnIn{ height: 100%; }
+.turnIn[data-dir='-1']{ animation-name: turnInBack; }
+@keyframes turnIn{
+  from{ opacity: 0; transform: translateX(18px); }
+  to{ opacity: 1; transform: none; }
+}
+@keyframes turnInBack{
+  from{ opacity: 0; transform: translateX(-18px); }
+  to{ opacity: 1; transform: none; }
+}
+
+/* A single sheet sweeping over the spine — the page-turn illusion. */
+.sheet{
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(50% + 11px);
+  right: 0;
+  transform-origin: left center;
+  background: linear-gradient(90deg, var(--parchment-2), var(--parchment));
+  border-radius: 2px 10px 10px 2px;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.25);
+  backface-visibility: hidden;
+  pointer-events: none;
+  animation: sheetFwd 0.6s var(--ease) both;
+}
+.sheet[data-dir='-1']{
+  left: 0;
+  right: calc(50% + 11px);
+  transform-origin: right center;
+  border-radius: 10px 2px 2px 10px;
+  animation-name: sheetBack;
+}
+@keyframes sheetFwd{
+  from{ transform: rotateY(0deg); opacity: 1; }
+  60%{ opacity: 0.8; }
+  to{ transform: rotateY(-180deg); opacity: 0; }
+}
+@keyframes sheetBack{
+  from{ transform: rotateY(0deg); opacity: 1; }
+  60%{ opacity: 0.8; }
+  to{ transform: rotateY(180deg); opacity: 0; }
+}
+
+/* ── plate (left page illustration) ────────────────────────── */
+
+.plate{
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.plateArt,
+.plateImg{
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  border: 1px solid var(--gold);
+  outline: 1px solid rgba(201, 162, 74, 0.45);
+  outline-offset: 5px;
+  border-radius: 3px;
+  object-fit: cover;
+}
+.plateArt{
+  position: relative;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--sky, linear-gradient(180deg, #1b1242, #07061a));
+}
+.plateArt::after{
+  /* horizon haze + drifting motes: atmosphere, not illustration */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle, rgba(232, 207, 138, 0.7) 0 1px, transparent 1.6px) 0 0 / 83px 97px,
+    radial-gradient(circle, rgba(170, 140, 255, 0.6) 0 1px, transparent 1.6px) 30px 40px / 127px 113px,
+    linear-gradient(180deg, transparent 55%, rgba(7, 6, 26, 0.75));
+  animation: motes 30s linear infinite;
+}
+@keyframes motes{ to{ background-position: 0 -300px, 30px -260px, 0 0; } }
+
+.plateNumeral{
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 8rem);
+  color: rgba(232, 207, 138, 0.22);
+  letter-spacing: 0.08em;
+}
+.plateCaption{
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+  text-align: center;
+  padding: 0 12px;
+}
+.plateLabel{
+  display: block;
+  font-family: var(--font-display);
+  font-style: normal;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  margin-bottom: 4px;
+}
+
+/* per-chapter skies, keyed off data-scene */
+.plate[data-scene='prologue']{ --sky: linear-gradient(180deg, #221655 0%, #3b2a7a 55%, #d59b6a 100%); }
+.plate[data-scene='forge']{ --sky: radial-gradient(ellipse at 50% 90%, #c8612b 0%, #4a1d1a 40%, #120a1e 80%); }
+.plate[data-scene='creations']{ --sky: radial-gradient(ellipse at 35% 35%, #6d4bd8 0%, #1d1250 45%, #07061a 85%); }
+.plate[data-scene='trials']{ --sky: linear-gradient(180deg, #121a3a 0%, #2f3a66 55%, #8a8fb0 100%); }
+.plate[data-scene='unknown']{ --sky: radial-gradient(ellipse at 50% 55%, #9b7cff 0%, #2a1a5e 18%, #07061a 60%); }
+.plate[data-scene='next']{ --sky: linear-gradient(180deg, #1b1242 0%, #6a3f7a 45%, #f0a860 85%, #ffd9a0 100%); }
+
+/* ── chapter heading ───────────────────────────────────────── */
+
+.chapterHead{
+  text-align: center;
+  margin-bottom: 28px;
+}
+.chapterNum{
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.chapterTitle{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
+  letter-spacing: 0.06em;
+  margin-top: 10px;
+  color: var(--ink);
+}
+.chapterSub{
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--ink-2);
+  margin-top: 6px;
+}
+.flourish{
+  display: block;
+  width: 120px;
+  height: 10px;
+  margin: 16px auto 0;
+  background:
+    radial-gradient(circle, var(--gold) 0 3px, transparent 3.5px) center / 10px 10px no-repeat,
+    linear-gradient(90deg, transparent, var(--gold) 30%, transparent 44%, transparent 56%, var(--gold) 70%, transparent) center / 100% 1px no-repeat;
+}
+
+/* ── body text ─────────────────────────────────────────────── */
+
+.body{
+  font-family: var(--font-book);
+  font-size: 1.14rem;
+  line-height: 1.62;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lead{ font-size: 1.22rem; }
+.dropcap{
+  float: left;
+  font-family: var(--font-display);
+  font-size: 3.4em;
+  line-height: 0.82;
+  padding: 6px 8px 0 0;
+  color: var(--leather);
+}
+.epigraph{
+  font-style: italic;
+  font-size: 1.3rem;
+  text-align: center;
+  color: var(--ink-2);
+  margin: 6px 0;
+}
+.meta{
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  letter-spacing: 0.03em;
+  color: var(--ink-3);
+}
+.h2{
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--leather);
+  margin-top: 18px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(138, 118, 96, 0.35);
+}
+.h3{
+  font-family: var(--font-book);
+  font-weight: 500;
+  font-size: 1.18rem;
+}
+.list{ padding-left: 1.2em; list-style: '— '; }
+.list li + li{ margin-top: 6px; }
+
+.readMore{
+  align-self: flex-start;
+  font-family: var(--font-ui);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--leather);
+  padding: 9px 16px;
+  border: 1px solid rgba(42, 26, 62, 0.35);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.readMore:hover{ background: var(--leather); color: var(--parchment); }
+
+.status{ color: var(--ink-2); }
+.status[data-status='wip']{ color: #7a4f00; }
+.status[data-status='plan']{ color: #5a3fa0; }
+
+/* ── II · forge ────────────────────────────────────────────── */
+
+.tabs{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tab{
+  font-family: var(--font-ui);
+  font-size: 0.78rem;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(138, 118, 96, 0.45);
+  color: var(--ink-2);
+  transition: background 0.2s, color 0.2s;
+}
+.tab:hover{ color: var(--ink); border-color: var(--ink-3); }
+.tab[aria-selected='true']{ background: var(--leather); border-color: var(--leather); color: var(--gold-lt); }
+
+.forgePanel{ display: flex; flex-direction: column; gap: 10px; }
+
+/* a book index: term ····· where it was used */
+.index li{
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 5px 0;
+}
+.indexTerm{ font-weight: 500; white-space: nowrap; }
+.indexDots{
+  flex: 1;
+  min-width: 20px;
+  border-bottom: 2px dotted rgba(138, 118, 96, 0.5);
+  transform: translateY(-4px);
+}
+.indexRef{
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ink-2);
+  text-align: right;
+}
+
+/* ── III · creations ───────────────────────────────────────── */
+
+.world{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 0 22px;
+  border-bottom: 1px solid rgba(138, 118, 96, 0.3);
+}
+.scene{
+  font-style: italic;
+  color: var(--ink-2);
+  font-size: 1.02rem;
+}
+.worldName{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.7rem;
+  letter-spacing: 0.08em;
+  color: var(--leather);
+}
+
+.tales{ display: grid; gap: 8px; }
+.tale{
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid rgba(138, 118, 96, 0.3);
+  border-radius: 6px;
+  font-family: var(--font-book);
+  color: var(--ink);
+  transition: background 0.2s, border-color 0.2s;
+}
+.tale:hover{ background: rgba(255, 250, 235, 0.45); border-color: var(--ink-3); }
+.taleName{ font-size: 1.15rem; font-weight: 500; }
+.taleLine{ font-size: 1rem; color: var(--ink-2); line-height: 1.45; margin-top: 2px; }
+.sealed{ border-style: dashed; }
+
+/* ── IV · trials ───────────────────────────────────────────── */
+
+.path{
+  position: relative;
+  padding-left: 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.path::before{
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 8px;
+  bottom: 8px;
+  border-left: 2px dashed rgba(138, 118, 96, 0.5);
+}
+.waystone{ position: relative; }
+.waystone::before{
+  content: '';
+  position: absolute;
+  left: -26px;
+  top: 6px;
+  width: 12px;
+  height: 12px;
+  transform: rotate(45deg);
+  background: var(--gold);
+  border: 2px solid var(--parchment);
+  box-shadow: 0 0 0 1px var(--ink-3);
+}
+.year{
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--ink-3);
+}
+.landmarks{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px 22px;
+}
+.landmarks p{ font-size: 1rem; color: var(--ink-2); line-height: 1.45; }
+
+/* ── VI · contact ──────────────────────────────────────────── */
+
+.contact{ display: flex; flex-direction: column; }
+.contact a{
+  display: grid;
+  grid-template-columns: 100px 1fr auto;
+  align-items: baseline;
+  gap: 12px;
+  padding: 14px 4px;
+  border-bottom: 1px solid rgba(138, 118, 96, 0.35);
+  text-decoration: none;
+  transition: background 0.2s, padding 0.2s;
+}
+.contact a:hover{ background: rgba(255, 250, 235, 0.45); padding-left: 10px; }
+.contactLabel{
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--leather);
+}
+.contactValue{ overflow-wrap: anywhere; }
+
+/* ── pager: prev · ribbon · next ───────────────────────────── */
+
+.pager{
+  width: min(1240px, 100%);
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 12px;
+}
+.turn{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-book);
+  font-size: 1.05rem;
+  color: var(--moon-2);
+  padding: 8px 4px;
+  transition: color 0.2s;
+}
+.turn:last-child{ justify-self: end; }
+.turn:hover:not(:disabled){ color: var(--gold-lt); }
+.turn:disabled{ opacity: 0.3; cursor: default; }
+
+.ribbon{
+  display: flex;
+  gap: 6px;
+}
+.ribbonMark{
+  width: 34px;
+  height: 40px;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  color: var(--moon-3);
+  border-radius: 3px 3px 0 0;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  background: rgba(255, 255, 255, 0.04);
+  padding-bottom: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+.ribbonMark:hover{ color: var(--moon); background: rgba(255, 255, 255, 0.1); }
+.ribbonMark[aria-current]{ background: #6b2334; color: var(--gold-lt); }
+
+/* ── single-page layout ────────────────────────────────────── */
+
+@media (max-width: 880px){
+  .brandRole{ display: none; }
+  .book{
+    height: auto;
+    grid-template-columns: 1fr;
+    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.5));
+  }
+  .spine{ display: none; }
+  .pageLeft{
+    border-radius: 8px 8px 0 0;
+    padding: 18px 18px 8px;
+    box-shadow: none;
+  }
+  .pageLeft .folio{ display: none; }
+  .plateArt{ aspect-ratio: 16 / 10; flex: none; }
+  .plateImg{ aspect-ratio: 16 / 10; flex: none; }
+  .plateCaption{ font-size: 0.9rem; }
+  .pageRight{
+    border-radius: 0 0 8px 8px;
+    padding: 20px 20px 28px;
+    overflow: visible;
+    box-shadow: none;
+  }
+  .sheet,
+  .sheet[data-dir='-1']{ left: 0; right: 0; border-radius: 8px; }
+  .body{ font-size: 1.08rem; }
+  .pager{
+    position: sticky;
+    bottom: 0;
+    padding: 10px 0 max(10px, env(safe-area-inset-bottom));
+    background: linear-gradient(0deg, var(--night) 60%, transparent);
+  }
+  .turnLabel{ display: none; }
+  .turn{ font-size: 1.3rem; padding: 8px 12px; }
+  .ribbonMark{ width: 30px; }
+  .contact a{ grid-template-columns: 1fr auto; }
+  .contactLabel{ grid-column: 1 / -1; }
+}
+
+@media (max-width: 420px){
+  .ribbon{ gap: 3px; }
+  .ribbonMark{ width: 26px; }
+  .barLink{ padding: 8px 6px; }
+  .barCta{ padding: 8px 12px; }
+}

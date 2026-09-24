@@ -2,8 +2,8 @@ import type { Project } from './types';
 
 /* ============================================================
    PROJECT DATA — the single source of truth.
-   Ported from the v1 assets/data.js, now typed and tagged with
-   worldRole so the Engineering District can build itself.
+   Ported from the v1 assets/data.js. `chapter` decides where a
+   project lives in the book: a full world, a Lesser Tale, or The Unknown.
    ============================================================ */
 
 export const PROJECTS: Project[] = [
@@ -16,7 +16,8 @@ export const PROJECTS: Project[] = [
     tagline:
       'An intelligent desktop AI companion — voice, memory, multi-model routing and proactive assistance in one application.',
     category: 'AI Desktop Assistant',
-    worldRole: 'world',
+    chapter: 'world',
+    scene: 'A wizard-tech tower wrapped in cosmic energy',
     overview:
       "AURA goes beyond a traditional chatbot. It combines voice interaction, long-term memory, multi-model AI routing and proactive assistance into a unified desktop application. Instead of waiting for user prompts, AURA observes context, remembers past interactions, and intelligently assists throughout the workflow. It isn't trying to replace your tools — it's designed to connect them.",
     problem:
@@ -111,7 +112,8 @@ export const PROJECTS: Project[] = [
     tagline:
       'A full-stack educational metaverse where students learn together inside a real-time virtual campus.',
     category: 'Multiplayer Metaverse',
-    worldRole: 'world',
+    chapter: 'world',
+    scene: 'A connected city of light, alive with travellers',
     overview:
       'A full-stack educational metaverse platform where students interact inside a virtual campus using real-time multiplayer technology. The platform focuses on collaboration, communication and immersive learning rather than gaming.',
     problem:
@@ -170,10 +172,8 @@ export const PROJECTS: Project[] = [
     name: 'Smart City Digital Twin',
     status: 'plan',
     statusLabel: 'Planned',
-    // NOTE: worldRole unresolved — see MASTER-PLAN.md §9.
-    // Scope suggests 'world'; the original plan listed it as a Central Tower building.
-    worldRole: 'unassigned',
-    building: 'Central Tower',
+    chapter: 'unknown',
+    scene: 'A kingdom mirrored in glass',
     tagline:
       'A live 3D mirror of a city — infrastructure, traffic, environment and services, driven by IoT data and AI analytics.',
     category: '3D Smart City',
@@ -229,8 +229,8 @@ export const PROJECTS: Project[] = [
     name: 'WasabiKiri',
     status: 'done',
     statusLabel: 'Completed',
-    worldRole: 'building',
-    building: 'Temple',
+    chapter: 'tale',
+    scene: 'An ancient archive where every file has its shelf',
     tagline:
       'わさび切り — a native C++ desktop file manager built around duplicate detection and OS-level algorithms.',
     category: 'Desktop File Manager',
@@ -266,7 +266,7 @@ export const PROJECTS: Project[] = [
       'Duplicate detection that is accurate without hashing every byte of every file.',
       'Doing it all in C++ with native GUI technology rather than reaching for a web wrapper.',
     ],
-    future: ['Superseded by WasabiKiri 2.0 — see the next building in the village.'],
+    future: ['Superseded by WasabiKiri 2.0 — see The Unknown.'],
     repo: 'https://github.com/shauryajohri',
     demo: '',
   },
@@ -277,8 +277,8 @@ export const PROJECTS: Project[] = [
     name: 'WasabiKiri 2.0',
     status: 'plan',
     statusLabel: 'Planned',
-    worldRole: 'building',
-    building: 'Torii Gate',
+    chapter: 'unknown',
+    scene: 'The archive, being rebuilt',
     tagline:
       'A full redesign — Japanese-inspired interface, deeper storage intelligence and visual analytics.',
     category: 'Desktop File Manager · Next Gen',
@@ -331,8 +331,8 @@ export const PROJECTS: Project[] = [
     name: 'Yatra AI',
     status: 'done',
     statusLabel: 'Completed',
-    worldRole: 'building',
-    building: 'Station',
+    chapter: 'tale',
+    scene: 'A living map that knows where to wander',
     tagline:
       'A deployed web app that recommends tourist destinations from user preferences using machine learning.',
     category: 'AI Recommendation System',
@@ -378,8 +378,8 @@ export const PROJECTS: Project[] = [
     name: 'Tourist Prediction System',
     status: 'done',
     statusLabel: 'Completed',
-    worldRole: 'building',
-    building: 'Observatory',
+    chapter: 'tale',
+    scene: 'An observatory reading the seasons of travel',
     tagline:
       'Forecasting tourist arrivals from historical and seasonal data to support planning and resource allocation.',
     category: 'Machine Learning Forecasting',
@@ -432,8 +432,8 @@ export const PROJECTS: Project[] = [
     name: 'FinGuard',
     status: 'done',
     statusLabel: 'Completed',
-    worldRole: 'building',
-    building: 'Vault',
+    chapter: 'tale',
+    scene: 'A vault with watchful wards',
     tagline:
       'A fraud detection platform that scores financial transactions for suspicious activity using machine learning.',
     category: 'Fraud Detection · Applied ML',
@@ -483,5 +483,6 @@ export const PROJECTS: Project[] = [
 
 export const getProject = (id: string) => PROJECTS.find((p) => p.id === id);
 
-export const WORLDS = PROJECTS.filter((p) => p.worldRole === 'world');
-export const DISTRICT = PROJECTS.filter((p) => p.worldRole === 'building');
+export const WORLDS = PROJECTS.filter((p) => p.chapter === 'world');
+export const TALES = PROJECTS.filter((p) => p.chapter === 'tale');
+export const UNWRITTEN = PROJECTS.filter((p) => p.chapter === 'unknown');

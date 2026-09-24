@@ -1,0 +1,159 @@
+/* ═══════════════════════════════════════════════════════════════
+   THE CLOSED BOOK
+   ═══════════════════════════════════════════════════════════════ */
+
+.scene{
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(28px, 5vh, 48px);
+  padding: 32px 16px;
+  perspective: 2000px;
+}
+
+.book{
+  position: relative;
+  width: min(380px, 78vw);
+  aspect-ratio: 3 / 4.1;
+  transform: rotateX(8deg);
+  transform-style: preserve-3d;
+  animation: rest 6s ease-in-out infinite;
+}
+@keyframes rest{
+  0%, 100%{ transform: rotateX(8deg) translateY(0); }
+  50%{ transform: rotateX(8deg) translateY(-6px); }
+}
+
+/* the page block peeking out on the right */
+.pages{
+  position: absolute;
+  inset: 6px -8px 6px 10px;
+  border-radius: 2px 6px 6px 2px;
+  background: repeating-linear-gradient(180deg, #e9dcc0 0 2px, #cdb98f 2px 3px);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+/* magic leaking from between the pages */
+.glow{
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  right: -26px;
+  width: 50px;
+  background: radial-gradient(ellipse at 20% 50%, rgba(160, 120, 255, 0.85), rgba(123, 92, 214, 0.25) 40%, transparent 70%);
+  filter: blur(8px);
+  animation: leak 3.2s ease-in-out infinite;
+}
+@keyframes leak{
+  0%, 100%{ opacity: 0.55; }
+  50%{ opacity: 1; }
+}
+
+.front{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 36px 28px;
+  text-align: center;
+  border-radius: 4px 10px 10px 4px;
+  background:
+    radial-gradient(ellipse at 50% 35%, rgba(123, 92, 214, 0.25), transparent 60%),
+    linear-gradient(135deg, #2f1d47, #1b1030 60%, #140b24);
+  box-shadow:
+    inset 8px 0 14px -6px rgba(0, 0, 0, 0.7),
+    inset 0 0 0 1px rgba(201, 162, 74, 0.35);
+  transform-origin: left center;
+  backface-visibility: hidden;
+  transition: transform 1s var(--ease), filter 1s;
+}
+.front:hover{ filter: brightness(1.08); }
+
+.frame{
+  position: absolute;
+  inset: 16px;
+  border: 1px solid rgba(201, 162, 74, 0.6);
+  outline: 1px solid rgba(201, 162, 74, 0.3);
+  outline-offset: 5px;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.kicker{
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.title{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.7rem, 7vw, 2.5rem);
+  line-height: 1.15;
+  letter-spacing: 0.08em;
+  color: var(--gold-lt);
+  text-shadow: 0 0 24px rgba(232, 207, 138, 0.25);
+}
+.rule{
+  width: 60%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.subtitle{
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: 1.02rem;
+  line-height: 1.5;
+  color: var(--moon-2);
+}
+
+/* opening: the cover swings away, the book settles flat */
+.scene[data-opening] .book{ animation: none; transform: rotateX(20deg) scale(1.08); transition: transform 1s var(--ease); }
+.scene[data-opening] .front{ transform: rotateY(-165deg); }
+.scene[data-opening] .below{ opacity: 0; }
+.scene[data-opening] .pages{ background: linear-gradient(180deg, var(--parchment), var(--parchment-2)); transition: background 0.3s; }
+
+.below{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  transition: opacity 0.4s;
+}
+.open{
+  font-family: var(--font-display);
+  font-size: 0.82rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--gold-lt);
+  padding: 13px 28px;
+  border: 1px solid rgba(201, 162, 74, 0.55);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.open:hover{ background: var(--gold); color: var(--night); }
+
+.role{
+  font-size: 0.85rem;
+  color: var(--moon-2);
+  text-align: center;
+}
+.links{
+  display: flex;
+  gap: 22px;
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+}
+.links a{
+  color: var(--moon-3);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+.links a:hover{ color: var(--moon); border-color: var(--gold); }

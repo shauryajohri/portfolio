@@ -1,6 +1,6 @@
-# Portfolio v2
+# Portfolio v2 — The Journey of Shaurya Johri
 
-Next.js + TypeScript rewrite. See `../MASTER-PLAN.md` for the full plan.
+Next.js + TypeScript. The portfolio is one living book. See `../MASTER-PLAN.md` for the full plan.
 
 ## Setup
 
@@ -10,52 +10,29 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000
+## Where things live
 
-> Install must be run on your own machine — Next.js ships platform-specific
-> native binaries (SWC), so a `node_modules` built elsewhere will not run here.
-
-## What's built (Phase 1, partial)
-
-| Area | Status |
+| What | File |
 |---|---|
-| Next.js / TS scaffold | ✅ |
-| Design tokens (`src/app/globals.css`) | ✅ |
-| Project + site data, typed (`src/data/`) | ✅ |
-| Automatic katana prologue | ✅ |
-| Rest scene | ⏳ placeholder — blocked on Q1/Q2 |
-| Hero · About · Projects · Contact | ⏳ not started |
+| Chapter order, titles, plate captions and images | `src/data/chapters.ts` |
+| Profile, skills (Forge), timeline, achievements, links | `src/data/site.ts` |
+| Projects and which chapter each belongs to (`chapter: world / tale / unknown`) | `src/data/projects.ts` |
+| Book shell: cover, page turns, nav, keyboard/swipe, deep links | `src/components/book/Book.tsx` |
+| Chapter content | `src/components/book/Chapters.tsx` |
+| Project record dialog | `src/components/book/ProjectDialog.tsx` |
 
-## The prologue
+## Adding the illustrations (final stage)
 
-`src/components/prologue/`
+Drop an image in `public/plates/` and set `plate.image` for that chapter in `src/data/chapters.ts`:
 
-- `script.ts` — every beat, timing and stage cue in one file. **Tune pacing here.**
-- `Prologue.tsx` — the rAF sequencer.
-- `OniKatana.tsx` — the blade. Ignition driven by the `--ignite` CSS var.
-- `Petals.tsx` — canvas sakura.
-
-Runs automatically, ~26s. Behaviour:
-
-- **Skip** button, plus <kbd>Esc</kbd> / <kbd>Enter</kbd> / <kbd>Space</kbd>.
-- Plays **once per browser session** (`sessionStorage`), so refreshing while
-  working doesn't force a re-watch.
-- Skipped entirely under `prefers-reduced-motion`.
-- Silent — see the audio note in the master plan (§4). Browsers block autoplay
-  audio, so sound needs either a mute-by-default toggle or first-interaction unlock.
-
-### Replaying it while developing
-
-Because it plays once per session, a plain refresh will **skip** it. Use:
-
-| URL | Behaviour |
-|---|---|
-| `localhost:3000/?intro=1` | always replay, ignores the session flag |
-| `localhost:3000/?intro=0` | always skip, jump straight to the scene |
-| `localhost:3000` | normal — plays once per tab session |
-
-Or clear the flag by hand:
-
-```js
-sessionStorage.removeItem('sj:prologue-seen'); location.reload();
+```ts
+plate: { caption: '…', image: '/plates/forge.webp' },
 ```
+
+Until then each plate shows its numeral over a tinted sky.
+
+## Behaviour
+
+- The cover auto-opens after ~2.4s. Return visits in the same session and deep links (`/#creations`) land on an open book.
+- Arrow keys and swipes turn pages. **Contents** in the top bar is the plain navigation.
+- Desktop shows a two-page spread; under 880px it becomes a single page.
