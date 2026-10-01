@@ -1,0 +1,107 @@
+/* The top bar — fixed over every stage. */
+
+.bar{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(16px, 4vw, 40px);
+  background: linear-gradient(180deg, rgba(7, 6, 26, 0.85), rgba(7, 6, 26, 0));
+  transition: opacity 0.6s ease;
+}
+/* during the intro the bar arrives once the eyes are open */
+.bar[data-stage='intro']{ animation: arrive 0.8s ease 1.4s both; }
+@keyframes arrive{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+
+.brand{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  gap: 2px;
+}
+.brandName{
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.14em;
+  color: var(--gold-lt);
+}
+.brandRole{
+  font-size: 0.72rem;
+  color: var(--moon-3);
+  letter-spacing: 0.04em;
+}
+
+.nav{
+  display: flex;
+  align-items: center;
+  gap: clamp(2px, 1.2vw, 12px);
+}
+.link{
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--moon-2);
+  text-decoration: none;
+  white-space: nowrap;
+  padding: 8px 10px;
+  border-radius: 999px;
+  transition: color 0.2s, background 0.2s;
+}
+.link:hover{ color: var(--moon); background: rgba(255, 255, 255, 0.06); }
+.cta{
+  color: var(--night);
+  background: var(--gold);
+  padding: 8px 16px;
+}
+.cta:hover{ color: var(--night); background: var(--gold-lt); }
+
+.toc{ position: relative; }
+.tocList{
+  position: absolute;
+  right: 0;
+  top: calc(100% + 8px);
+  min-width: 280px;
+  padding: 10px;
+  background: var(--night-2);
+  border: 1px solid rgba(201, 162, 74, 0.3);
+  border-radius: 10px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+.tocList a{
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  align-items: baseline;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-family: var(--font-book);
+  font-size: 1.05rem;
+  color: var(--moon);
+}
+.tocList a:hover,
+.tocList a[aria-current]{ background: rgba(201, 162, 74, 0.12); }
+.tocNum{ font-family: var(--font-display); font-size: 0.8rem; color: var(--gold); }
+.tocLabel{ font-family: var(--font-ui); font-size: 0.72rem; color: var(--moon-3); }
+
+@media (max-width: 880px){
+  .brandRole{ display: none; }
+}
+
+@media (max-width: 520px){
+  .bar{ gap: 6px; padding: 12px 12px; }
+  .brandName{ font-size: 0.74rem; letter-spacing: 0.05em; white-space: normal; max-width: 7em; line-height: 1.2; }
+  .nav{ gap: 0; }
+  .link{ padding: 8px 6px; font-size: 0.74rem; }
+  .cta{ padding: 8px 11px; }
+  .wide{ display: none; }
+}

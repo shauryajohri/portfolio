@@ -1,36 +1,37 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Noto_Serif_JP, JetBrains_Mono } from 'next/font/google';
+import { Cinzel, EB_Garamond, Inter } from 'next/font/google';
 import './globals.css';
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['400', '600'],
+  variable: '--font-cinzel',
+  display: 'swap',
+});
+
+const garamond = EB_Garamond({
+  subsets: ['latin'],
+  weight: ['400', '500'],
+  style: ['normal', 'italic'],
+  variable: '--font-garamond',
+  display: 'swap',
+});
 
 const inter = Inter({
   subsets: ['latin'],
-  weight: ['200', '300', '400', '500'],
+  weight: ['400', '500'],
   variable: '--font-inter',
   display: 'swap',
 });
 
-const notoSerifJP = Noto_Serif_JP({
-  subsets: ['latin'],
-  weight: ['200', '300', '400'],
-  variable: '--font-noto-jp',
-  display: 'swap',
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500'],
-  variable: '--font-mono-jb',
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
-  title: 'Shaurya Johri — AI Engineer & Software Developer',
+  title: 'The Journey of Shaurya Johri — Software Developer & AI Engineer',
   description:
-    'Shaurya Johri builds intelligent software and, sometimes, entire worlds. AURA, SmartConnect, Smart City Digital Twin and more.',
+    'Shaurya Johri builds intelligent systems — desktop AI, machine-learning pipelines and real-time 3D worlds. AURA, SmartConnect and more, told as a book.',
 };
 
 export const viewport: Viewport = {
-  themeColor: '#05030c',
+  themeColor: '#07061a',
   colorScheme: 'dark',
 };
 
@@ -42,7 +43,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${notoSerifJP.variable} ${jetbrains.variable}`}
+      className={`${cinzel.variable} ${garamond.variable} ${inter.variable}`}
     >
       <body>{children}</body>
     </html>

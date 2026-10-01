@@ -1,0 +1,68 @@
+/* A project's universe — placeholder backdrops until the art stage. */
+
+.universe{
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  overflow-y: auto;
+  animation: arrive 0.8s ease 0.8s both;
+}
+.universe:focus{ outline: none; }
+@keyframes arrive{
+  from{ opacity: 0; transform: scale(0.97); }
+  to{ opacity: 1; transform: none; }
+}
+
+.backdrop{
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--world, radial-gradient(ellipse at 50% 30%, #2a1a5e, #07061a 70%));
+}
+.universe[data-world='aura']{ --world: radial-gradient(circle at 50% 28%, #000 0 8%, rgba(255, 210, 160, 0.5) 9.5%, #3a1f86 18%, #0b0720 55%, #05041a); }
+.universe[data-world='smartconnect']{ --world: radial-gradient(ellipse at 50% 100%, #5b3fae, #1a1240 45%, #07061a 80%); }
+.universe[data-world='yatra']{ --world: radial-gradient(ellipse at 30% 40%, #2f6a5a, #102438 50%, #07061a 85%); }
+.universe[data-world='prediction']{ --world: radial-gradient(ellipse at 70% 20%, #3f4f9e, #141a44 50%, #07061a 85%); }
+.universe[data-world='wasabikiri']{ --world: radial-gradient(ellipse at 50% 60%, #6a4a2a, #2a1a14 50%, #07061a 85%); }
+.universe[data-world='finguard']{ --world: radial-gradient(ellipse at 50% 50%, #2a5a4a, #0f2420 50%, #07061a 85%); }
+
+.content{
+  width: min(820px, 100%);
+  margin: 0 auto;
+  padding: 92px 16px 64px;
+}
+
+.back{
+  font-size: 0.82rem;
+  letter-spacing: 0.06em;
+  color: var(--moon-2);
+  padding: 8px 14px;
+  border: 1px solid rgba(201, 162, 74, 0.4);
+  border-radius: 999px;
+  transition: background 0.2s, color 0.2s;
+}
+.back:hover{ background: rgba(201, 162, 74, 0.15); color: var(--moon); }
+
+.scene{
+  margin-top: clamp(40px, 14vh, 140px);
+  font-family: var(--font-book);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--moon-2);
+}
+.title{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(2.4rem, 7vw, 4.6rem);
+  letter-spacing: 0.08em;
+  color: var(--gold-lt);
+  text-shadow: 0 0 40px rgba(146, 108, 255, 0.45);
+  margin: 6px 0 clamp(28px, 6vh, 56px);
+}
+
+.record{
+  border-radius: 10px;
+  background: var(--parchment);
+  color: var(--ink);
+  box-shadow: 0 40px 90px rgba(0, 0, 0, 0.55);
+}

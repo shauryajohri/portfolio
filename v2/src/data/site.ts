@@ -1,83 +1,114 @@
-import type { Achievement, Stat, TimelineEntry } from './types';
+import type { Achievement, TimelineEntry } from './types';
 
-export const SKILLS: Record<string, string[]> = {
-  Frontend: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Three.js', 'Electron'],
-  Backend: ['Python', 'FastAPI', 'Node.js', 'WebSockets', 'Flask', 'PostgreSQL', 'SQLite'],
-  'AI / ML': [
-    'LLM Routing',
-    'Prompt Engineering',
-    'OpenRouter',
-    'Groq',
-    'Ollama',
-    'Gemini',
-    'Whisper',
-    'Scikit-learn',
-    'Pandas',
-    'NumPy',
+export const PROFILE = {
+  name: 'Shaurya Johri',
+  role: 'Software Developer · AI Engineer',
+  status: 'Open to internships and collaborations',
+  intro:
+    'Shaurya Johri is a software developer who builds intelligent systems — desktop AI, machine-learning pipelines and real-time 3D worlds.',
+  /** Leave empty to hide. Degree · institution · years. */
+  education: '',
+  beginning: [
+    'It started with C++ and the fundamentals: data structures, algorithms, and learning to finish things instead of abandoning them at 80%.',
+    'From there the work moved to the web, then to machine learning, and finally to AURA — the project that pulled everything together.',
   ],
-  Languages: ['C++', 'Python', 'JavaScript', 'TypeScript', 'Java', 'SQL'],
-  Tools: ['Git', 'Docker', 'VS Code', 'Qt', 'Figma', 'Linux', 'Vercel'],
+  motivation:
+    'What drives the work: software that remembers, adapts and helps before it is asked.',
+  aspiration:
+    'The builder he wants to become: one who designs whole systems end to end — from the model to the interface people actually touch.',
 };
+
+/** Chapter II — The Forge. Concrete tools only; no filler categories. */
+export const FORGE: { name: string; note: string; tools: string[] }[] = [
+  {
+    name: 'Languages',
+    note: 'The raw metal.',
+    tools: ['C++', 'Python', 'Java', 'JavaScript', 'TypeScript', 'SQL'],
+  },
+  {
+    name: 'Frontend',
+    note: 'What people see and touch.',
+    tools: ['React', 'Next.js', 'Tailwind CSS', 'Three.js', 'Electron'],
+  },
+  {
+    name: 'Backend & Systems',
+    note: 'The machinery underneath.',
+    tools: ['Node.js', 'FastAPI', 'Flask', 'WebSockets', 'PostgreSQL', 'SQLite'],
+  },
+  {
+    name: 'AI / ML',
+    note: 'The part that thinks.',
+    tools: [
+      'Multi-LLM routing',
+      'OpenRouter',
+      'Groq',
+      'Ollama',
+      'Gemini',
+      'Whisper',
+      'Scikit-learn',
+      'Pandas',
+      'NumPy',
+    ],
+  },
+  {
+    name: 'Tools & Cloud',
+    note: 'How it gets shipped.',
+    tools: ['Git', 'Docker', 'Linux', 'Vercel', 'Qt', 'Figma'],
+  },
+];
 
 export const TIMELINE: TimelineEntry[] = [
   {
     year: '2023',
     title: 'Started Programming',
-    body: 'First lines of code — C++ and the fundamentals. Data structures, algorithms, and learning to actually finish things rather than abandon them at 80%.',
+    body: 'C++ and the fundamentals — data structures and algorithms.',
   },
   {
     year: '2024',
     title: 'Web Development',
-    body: 'Moved into full-stack: JavaScript, React, Next.js, backends and databases. Started shipping projects other people could open in a browser.',
+    body: 'Full-stack: JavaScript, React, Next.js, backends and databases.',
   },
   {
     year: '2025',
     title: 'Machine Learning',
-    body: 'Scikit-learn, Pandas, real pipelines. Tourist Prediction, Yatra AI and FinGuard came out of this year — forecasting, recommendation and fraud detection end to end.',
+    body: 'Tourist Prediction, Yatra AI and FinGuard — forecasting, recommendation and fraud detection end to end.',
   },
   {
     year: '2025',
     title: 'AURA begins',
-    body: 'The flagship. A desktop AI companion with memory, voice and multi-model routing — the project that pulled everything else together.',
+    body: 'A desktop AI companion with memory, voice and multi-model routing.',
   },
   {
     year: '2026',
     title: 'Internship',
     body: 'Applying the work in a professional environment.',
   },
-  {
-    year: '2026',
-    title: 'SmartConnect',
-    body: 'Designing a real-time multiplayer educational metaverse — the first project built as much for research as for shipping.',
-  },
-  {
-    year: '2026',
-    title: 'Digital Twin',
-    body: 'Smart City digital twin: 3D visualisation over live IoT and AI analytics.',
-  },
 ];
 
 export const ACHIEVEMENTS: Achievement[] = [
-  { glyph: '🏆', title: 'Hackathons', body: 'Competitive build events — shipping working software against the clock.' },
-  { glyph: '📜', title: 'Certificates', body: 'Formal coursework and certifications across AI, web and systems.' },
-  { glyph: '🔬', title: 'Research', body: 'Educational metaverse and smart-city work aimed at publication.' },
-  { glyph: '⚡', title: 'Competitive Coding', body: 'Regular practice in algorithmic problem solving.' },
-  { glyph: '🚀', title: 'Projects', body: '8 projects spanning AI, ML, desktop and 3D web.' },
-  { glyph: '💼', title: 'Internship', body: 'Professional engineering experience.' },
   { glyph: '🌐', title: 'ICPC', body: 'International Collegiate Programming Contest participation.' },
-  { glyph: '💻', title: 'CodeVita', body: 'TCS CodeVita global coding contest participation.' },
+  { glyph: '💻', title: 'TCS CodeVita', body: 'Global coding contest participation.' },
+  { glyph: '🏆', title: 'Hackathons', body: 'Competitive build events — shipping working software against the clock.' },
+  { glyph: '📜', title: 'Certifications', body: 'Coursework and certifications across AI, web and systems.' },
+  { glyph: '🔬', title: 'Research', body: 'Educational metaverse and smart-city work aimed at publication.' },
 ];
 
-export const STATS: Stat[] = [
-  { value: 8, suffix: '+', label: 'Projects' },
-  { value: 25000, suffix: '+', label: 'Lines of Code' },
-  { value: 20, suffix: '+', label: 'Technologies' },
-  { value: 10, suffix: '+', label: 'Repositories' },
-];
+/** Chapter V — The Unknown. Planned projects are pulled in from PROJECTS. */
+export const UNKNOWN = {
+  building: 'AURA — the React + Electron rewrite, with the cosmic UI over a WebSocket bridge.',
+  goals: [
+    'Publish the educational-metaverse research',
+    'Ship AURA’s plugin system and mobile companion',
+    'Take SmartConnect from campus prototype to live multiplayer',
+  ],
+  research: 'Educational metaverses, AI-assisted collaboration and smart-city digital twins.',
+};
 
 export const LINKS = {
   github: 'https://github.com/shauryajohri',
+  /** Leave empty to hide. */
   linkedin: '',
   email: 'shauryajohri9@gmail.com',
+  /** Drop the file at public/resume.pdf. */
   resume: '/resume.pdf',
 };

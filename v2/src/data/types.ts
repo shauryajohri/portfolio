@@ -1,10 +1,10 @@
 export type ProjectStatus = 'done' | 'wip' | 'plan';
 
-/** Where a project lives in the world model. */
-export type WorldRole =
-  | 'world'    // a flagship with its own explorable world
-  | 'building' // lives in the Engineering District
-  | 'unassigned';
+/** Where a project lives in the book. */
+export type BookChapter =
+  | 'world'   // a flagship with its own world in The Creations
+  | 'tale'    // a smaller project on the Lesser Tales spread
+  | 'unknown'; // planned work, shown in The Unknown
 
 export interface Project {
   id: string;
@@ -14,9 +14,9 @@ export interface Project {
   statusLabel: string;
   tagline: string;
   category: string;
-  worldRole: WorldRole;
-  /** Engineering District archetype, when worldRole === 'building'. */
-  building?: string;
+  chapter: BookChapter;
+  /** One-line fantasy metaphor; captions the project's illustration. */
+  scene: string;
   overview: string;
   problem: string;
   solution: string;
@@ -43,8 +43,3 @@ export interface Achievement {
   body: string;
 }
 
-export interface Stat {
-  value: number;
-  suffix: string;
-  label: string;
-}

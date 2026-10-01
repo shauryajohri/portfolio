@@ -1,6 +1,6 @@
-# Portfolio v2
+# Portfolio v2 — The Balcony
 
-Next.js + TypeScript rewrite. See `../MASTER-PLAN.md` for the full plan.
+Next.js + TypeScript. You open your eyes on a balcony, look out at a kingdom of projects, and read the book on the table. See `../MASTER-PLAN.md` for the full plan.
 
 ## Setup
 
@@ -10,52 +10,43 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:3000
+## How it works
 
-> Install must be run on your own machine — Next.js ships platform-specific
-> native binaries (SWC), so a `node_modules` built elsewhere will not run here.
+The page is always in one of four **stages**, set as `data-stage` on the root:
 
-## What's built (Phase 1, partial)
-
-| Area | Status |
+| Stage | What you see |
 |---|---|
-| Next.js / TS scaffold | ✅ |
-| Design tokens (`src/app/globals.css`) | ✅ |
-| Project + site data, typed (`src/data/`) | ✅ |
-| Automatic katana prologue | ✅ |
-| Rest scene | ⏳ placeholder — blocked on Q1/Q2 |
-| Hero · About · Projects · Contact | ⏳ not started |
+| `intro` | Eyelids open on the view (first visit per session only, ~2.3s) |
+| `view` | Looking out: AURA in the sky, the kingdom, the dragon, the book on the table |
+| `book` | Looking down: the book fills the screen and can be read |
+| `universe` | Inside a project's world |
 
-## The prologue
+The **camera is CSS**: each scene layer and the book move by their own amounts when `data-stage` changes. No animation library.
 
-`src/components/prologue/`
+## Where things live
 
-- `script.ts` — every beat, timing and stage cue in one file. **Tune pacing here.**
-- `Prologue.tsx` — the rAF sequencer.
-- `OniKatana.tsx` — the blade. Ignition driven by the `--ignite` CSS var.
-- `Petals.tsx` — canvas sakura.
-
-Runs automatically, ~26s. Behaviour:
-
-- **Skip** button, plus <kbd>Esc</kbd> / <kbd>Enter</kbd> / <kbd>Space</kbd>.
-- Plays **once per browser session** (`sessionStorage`), so refreshing while
-  working doesn't force a re-watch.
-- Skipped entirely under `prefers-reduced-motion`.
-- Silent — see the audio note in the master plan (§4). Browsers block autoplay
-  audio, so sound needs either a mute-by-default toggle or first-interaction unlock.
-
-### Replaying it while developing
-
-Because it plays once per session, a plain refresh will **skip** it. Use:
-
-| URL | Behaviour |
+| What | File |
 |---|---|
-| `localhost:3000/?intro=1` | always replay, ignores the session flag |
-| `localhost:3000/?intro=0` | always skip, jump straight to the scene |
-| `localhost:3000` | normal — plays once per tab session |
+| Stages, intro timing, chapter navigation, keyboard, deep links | `src/components/Experience.tsx` (+ `.module.css` for the book's camera and eyelids) |
+| The balcony scene layers + camera moves | `src/components/scene/Scene.tsx` + `Scene.module.css` |
+| Where each project sits in the view (camera dive target) | `src/data/view.ts` |
+| Top bar (Look up / Read, Contents, Resume, Contact) | `src/components/Hud.tsx` |
+| The book: opener page, chapter page, cover, page turns, pager | `src/components/book/Book.tsx` |
+| Chapter content | `src/components/book/Chapters.tsx` |
+| Project record (dialog + inside universes) | `src/components/book/ProjectDialog.tsx` |
+| A project's universe (placeholder) | `src/components/universe/Universe.tsx` |
+| Chapter order, titles, epigraphs | `src/data/chapters.ts` |
+| Profile, skills, timeline, achievements, links | `src/data/site.ts` |
+| Projects and where each belongs (`chapter: world / tale / unknown`) | `src/data/projects.ts` |
 
-Or clear the flag by hand:
+## Controls
 
-```js
-sessionStorage.removeItem('sj:prologue-seen'); location.reload();
-```
+- **Read / Look up** in the top bar, or **↓ / ↑** (↑ only at the top of a page).
+- **← →** or swipe to turn pages. **Contents** jumps to any chapter.
+- **Enter its world** in The Creations or any project record; **Esc** or **Return to the balcony** comes back.
+- Deep links (`/#creations`) and return visits in the same session skip the intro.
+
+## Art (final stage)
+
+Everything visual is placeholder CSS until then. The art plugs into:
+the scene layers in `Scene.module.css`, the dragon in `scene/Dragon.tsx`, chapter sketches via `sketch` in `chapters.ts`, and universe backdrops in `universe/Universe.module.css`.
