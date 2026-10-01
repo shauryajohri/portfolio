@@ -1,6 +1,6 @@
 # Shaurya Johri — Portfolio Master Plan
 
-**Status:** Concept v3 — *The Balcony*. Phase A built (1 Oct 2026); Phase B next.
+**Status:** Concept v3 — *The Balcony*. Phases A–B built (1 Oct 2026); Phase C next.
 **Last updated:** 1 October 2026
 
 ---
@@ -149,10 +149,10 @@ Each universe has its own URL (`/aura`, `/smartconnect`, …) so it can be linke
 ### Phase A — Scene shell *(built)*
 Four stages (`intro · view · book · universe`) on one root attribute; the camera is CSS transitions per layer (no GSAP needed). Eyes-open intro (~2.3s, skippable by any click/key, once per session). Look up / look down (bar button, ↑/↓, or click the book). Book lies on the table in perspective, closed cover opens on first look down. Chapter opener on the left page. Enter its world → camera dives toward the project, book drops away, placeholder universe with the record; Esc/Return comes back to the same page. Phone layout: same scene in portrait, single-page book.
 
-### Phase B — The view *(next)*
-Hotspots with hover labels on AURA, SmartConnect and each small-project building (positions in `v2/src/data/view.ts`) · unlit planned buildings · dragon reactions (on look up / enter) · idle ambient motion (window lights, clouds, lantern).
+### Phase B — The view *(built)*
+Every project in the view is a button (positions in `v2/src/data/view.ts`, right edge kept clear for the dragon): hover/focus shows a label and lights it up while the rest dim; built ones enter their world, planned ones (unlit, scaffolded) open The Unknown. Placeholder district buildings per project (gate, dome, temple, vault, spire). Dragon perks up when you look up and rears with wings raised when you dive. Window lights come on one building at a time after waking, then flicker; clouds drift; a lantern on the table flickers.
 
-### Phase C — Universes
+### Phase C — Universes *(next)*
 Universe template (art slot + record + return) · routes per project · enter/return camera transitions · AURA black hole shader and dive.
 
 ### Phase D — Polish

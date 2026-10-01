@@ -29,7 +29,7 @@ The **camera is CSS**: each scene layer and the book move by their own amounts w
 |---|---|
 | Stages, intro timing, chapter navigation, keyboard, deep links | `src/components/Experience.tsx` (+ `.module.css` for the book's camera and eyelids) |
 | The balcony scene layers + camera moves | `src/components/scene/Scene.tsx` + `Scene.module.css` |
-| Where each project sits in the view (camera dive target) | `src/data/view.ts` |
+| Where each project sits in the view: click area, camera dive target, placeholder building shape | `src/data/view.ts` |
 | Top bar (Look up / Read, Contents, Resume, Contact) | `src/components/Hud.tsx` |
 | The book: opener page, chapter page, cover, page turns, pager | `src/components/book/Book.tsx` |
 | Chapter content | `src/components/book/Chapters.tsx` |
@@ -43,6 +43,7 @@ The **camera is CSS**: each scene layer and the book move by their own amounts w
 
 - **Read / Look up** in the top bar, or **↓ / ↑** (↑ only at the top of a page).
 - **← →** or swipe to turn pages. **Contents** jumps to any chapter.
+- In the view, **hover or Tab** to any place in the kingdom; click to enter it (planned buildings open The Unknown).
 - **Enter its world** in The Creations or any project record; **Esc** or **Return to the balcony** comes back.
 - Deep links (`/#creations`) and return visits in the same session skip the intro.
 

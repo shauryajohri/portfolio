@@ -10,7 +10,9 @@ export function DragonSilhouette() {
         <path d="M100 13 L95 3 L104 11 Z" />
         <circle data-eye cx="106" cy="15.5" r="1.3" />
       </g>
-      <path d="M54 50 Q60 20 84 21 Q74 30 72 45 Q64 41 54 50 Z" />
+      <g data-wing>
+        <path d="M54 50 Q60 20 84 21 Q74 30 72 45 Q64 41 54 50 Z" />
+      </g>
       <path d="M52 68 L50 80 L57 80 L59 70 Z M76 68 L76 80 L83 80 L83 68 Z" />
     </svg>
   );

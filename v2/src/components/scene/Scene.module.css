@@ -37,6 +37,26 @@
     linear-gradient(180deg, #05041a 0%, #100b33 38%, #26185a 66%, #5e3a78 84%, #b3706a 100%);
 }
 
+.clouds{
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.clouds::before,
+.clouds::after{
+  content: '';
+  position: absolute;
+  width: 70%;
+  height: 22%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(140, 110, 220, 0.16), transparent 70%);
+  filter: blur(12px);
+  animation: drift 120s linear infinite;
+}
+.clouds::before{ top: 46%; left: -70%; }
+.clouds::after{ top: 62%; left: -70%; height: 14%; animation-duration: 90s; animation-delay: -40s; opacity: 0.8; }
+@keyframes drift{ to{ transform: translateX(240%); } }
+
 .auraLayer{ top: 0; height: 60%; }
 
 /* AURA — a black hole with a glowing accretion ring.
@@ -74,20 +94,88 @@
 }
 .aura::before{ z-index: -1; }
 .aura::after{ clip-path: inset(50% 0 0 0); }
+.aura{ transition: transform 0.5s var(--ease), box-shadow 0.5s ease; }
+.aura[data-hot]{
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 120px 40px rgba(170, 130, 255, 0.4);
+}
 @keyframes auraPulse{
   0%, 100%{ filter: brightness(1); }
   50%{ filter: brightness(1.18); }
 }
 
-/* far kingdom — the small projects' district (Phase B: hotspots) */
+/* far kingdom — filler skyline behind the district */
 .far{
   top: 36%;
   height: 64%;
   background:
-    radial-gradient(circle, rgba(255, 210, 130, 0.55) 0 1px, transparent 1.6px) 0 0 / 23px 19px,
-    linear-gradient(180deg, #2c2163, #17113a);
+    radial-gradient(circle, rgba(255, 210, 130, 0.35) 0 1px, transparent 1.6px) 0 0 / 23px 19px,
+    linear-gradient(180deg, #261c58, #140f34);
   clip-path: polygon(0 100%, 0 29%, 5% 29%, 5% 21%, 9% 21%, 9% 32%, 15% 32%, 15% 18%, 17% 15%, 19% 18%, 19% 31%, 26% 31%, 26% 24%, 31% 24%, 31% 16%, 34% 16%, 34% 27%, 40% 27%, 40% 33%, 60% 33%, 60% 26%, 66% 26%, 66% 20%, 69% 17%, 72% 20%, 72% 29%, 78% 29%, 78% 22%, 83% 22%, 83% 32%, 88% 32%, 88% 16%, 90% 12%, 92% 16%, 92% 31%, 100% 31%, 100% 100%);
 }
+
+/* district — one building per small project (positions: data/view.ts).
+   Lit = built and enterable; unlit with scaffolding = planned. */
+.district{ top: 0; height: 100%; pointer-events: none; }
+
+.building{
+  position: absolute;
+  left: calc((var(--x) - var(--w) / 2) * 1%);
+  top: calc((var(--y) - var(--h) / 2) * 1%);
+  width: calc(var(--w) * 1%);
+  height: calc((72 - var(--y) + var(--h) / 2) * 1%);
+  background: linear-gradient(180deg, #2e2470, #191245);
+  transition: filter 0.4s ease;
+}
+/* windows come on one building at a time once the eyes are open */
+.building[data-lit]::after{
+  content: '';
+  position: absolute;
+  inset: 22% 14% 0;
+  background: radial-gradient(circle, rgba(255, 214, 140, 0.95) 0 1.2px, transparent 2px) 0 0 / 9px 11px;
+  animation:
+    lightsOn 0.6s steps(3) calc(2.4s + var(--i) * 0.35s) both,
+    flicker 9s steps(1) calc(var(--i) * -1.7s) infinite;
+}
+@keyframes lightsOn{
+  from{ opacity: 0; }
+  to{ opacity: 1; }
+}
+@keyframes flicker{
+  0%, 100%{ opacity: 1; }
+  47%{ opacity: 0.55; }
+  49%{ opacity: 1; }
+}
+.building:not([data-lit]){
+  background:
+    repeating-linear-gradient(45deg, rgba(190, 170, 255, 0.14) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(-45deg, rgba(190, 170, 255, 0.1) 0 1px, transparent 1px 7px),
+    linear-gradient(180deg, #17122f, #0e0a20);
+}
+.building[data-hot]{ filter: brightness(1.6) drop-shadow(0 0 10px rgba(232, 207, 138, 0.6)); }
+.scene[data-hot] .building:not([data-hot]){ filter: brightness(0.7); }
+
+.building[data-shape='gate']{ clip-path: polygon(0 100%, 0 30%, 10% 30%, 10% 22%, 50% 0, 90% 22%, 90% 30%, 100% 30%, 100% 100%); }
+.building[data-shape='dome']{ clip-path: polygon(0 100%, 0 40%, 5% 28%, 15% 16%, 30% 7%, 50% 4%, 70% 7%, 85% 16%, 95% 28%, 100% 40%, 100% 100%); }
+.building[data-shape='temple']{ clip-path: polygon(0 100%, 0 30%, 50% 8%, 100% 30%, 100% 100%); }
+.building[data-shape='vault']{ clip-path: polygon(0 100%, 0 12%, 15% 12%, 15% 0, 30% 0, 30% 12%, 42% 12%, 42% 0, 58% 0, 58% 12%, 70% 12%, 70% 0, 85% 0, 85% 12%, 100% 12%, 100% 100%); }
+.building[data-shape='spire']{ clip-path: polygon(0 100%, 0 40%, 30% 30%, 45% 0, 55% 0, 70% 30%, 100% 40%, 100% 100%); }
+
+/* the glow behind whatever is being pointed at */
+.halo{
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  width: calc(var(--w) * 2.4%);
+  height: calc(var(--h) * 1.5%);
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(232, 207, 138, 0.35), rgba(146, 108, 255, 0.18) 45%, transparent 70%);
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+.halo[data-hot]{ opacity: 1; }
 
 /* near kingdom — SmartConnect's tower rising from the centre */
 .near{
@@ -98,6 +186,76 @@
     radial-gradient(circle, rgba(255, 220, 150, 0.6) 0 1px, transparent 1.7px) 7px 5px / 31px 23px,
     linear-gradient(180deg, #1c1544, #0c0920);
   clip-path: polygon(0 100%, 0 40%, 12% 38%, 24% 41%, 36% 37%, 42% 34%, 44% 23%, 46% 23%, 47% 10%, 49% 10%, 50% 0%, 51% 10%, 53% 10%, 54% 23%, 56% 23%, 58% 34%, 64% 37%, 76% 40%, 88% 38%, 100% 41%, 100% 100%);
+}
+
+/* ── the clickable kingdom (view stage only) ───────────────── */
+
+.spots{
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+[data-stage='view'] .spots{
+  visibility: visible;
+  opacity: 1;
+  transition: opacity 0.5s ease 0.6s;
+}
+
+.spot{
+  position: absolute;
+  left: calc(var(--x) * 1%);
+  top: calc(var(--y) * 1%);
+  width: calc(var(--w) * 1%);
+  min-width: 36px;
+  height: calc(var(--h) * 1%);
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+}
+.spot:focus-visible{ outline: 1px dashed var(--gold); outline-offset: 4px; }
+
+.label{
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 9px 14px;
+  white-space: nowrap;
+  border-radius: 8px;
+  border: 1px solid rgba(201, 162, 74, 0.5);
+  background: rgba(7, 6, 26, 0.88);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 6px);
+  transition: opacity 0.25s ease, transform 0.25s var(--ease);
+}
+.spot:hover .label,
+.spot:focus-visible .label{ opacity: 1; transform: translate(-50%, 0); }
+.spot[data-label='below'] .label{ bottom: auto; top: calc(100% + 10px); }
+.spot[data-label='left'] .label{ left: 0; transform: translate(0, 6px); align-items: flex-start; }
+.spot[data-label='left']:hover .label,
+.spot[data-label='left']:focus-visible .label{ transform: none; }
+.spot[data-label='right'] .label{ left: auto; right: 0; transform: translate(0, 6px); align-items: flex-end; }
+.spot[data-label='right']:hover .label,
+.spot[data-label='right']:focus-visible .label{ transform: none; }
+.label strong{
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  color: var(--gold-lt);
+}
+.label span{ font-size: 0.72rem; color: var(--moon-2); }
+.label em{
+  font-family: var(--font-book);
+  font-size: 0.9rem;
+  color: var(--moon);
+  margin-top: 2px;
 }
 
 /* the balcony railing: a stone cap over a row of balusters */
@@ -112,7 +270,7 @@
 
 .dragon{
   position: absolute;
-  right: 10%;
+  right: 3%;
   bottom: calc(100% - 0.6vh);
   height: min(17vh, 150px);
   aspect-ratio: 120 / 80;
@@ -123,6 +281,25 @@
 .dragon svg{ display: block; width: 100%; height: 100%; fill: currentColor; }
 .dragon [data-eye]{ fill: #b89cff; }
 .dragon svg{ transform-origin: 50% 100%; animation: breathe 5.5s ease-in-out infinite; }
+.dragonReact{ width: 100%; height: 100%; transform-origin: 50% 100%; }
+.dragon [data-wing]{ transform-origin: 56px 50px; transition: transform 0.6s var(--ease); }
+.dragon [data-eye]{ transition: fill 0.4s ease; }
+/* it notices you looking up… */
+[data-stage='view'] .dragonReact{ animation: perk 1.4s var(--ease) 0.4s; }
+[data-stage='view'] .dragon [data-eye]{ fill: #e6dbff; }
+/* …and rears, wings raised, as you dive into a world */
+[data-stage='universe'] .dragonReact{ animation: rear 0.9s var(--ease) both; }
+[data-stage='universe'] .dragon [data-wing]{ transform: rotate(-28deg) scale(1.25); }
+@keyframes perk{
+  0%, 100%{ transform: none; }
+  30%{ transform: translateY(-5%) rotate(-3deg); }
+  55%{ transform: translateY(0) rotate(1deg); }
+}
+@keyframes rear{
+  0%{ transform: none; }
+  45%{ transform: translateY(-10%) rotate(-6deg) scale(1.04); }
+  100%{ transform: translateY(-4%) rotate(-3deg); }
+}
 .dragon [data-neck]{ transform-origin: 84px 56px; animation: look 9s ease-in-out infinite; }
 @keyframes breathe{
   0%, 100%{ transform: scaleY(1); }
@@ -144,8 +321,45 @@
   box-shadow: inset 0 2px 0 rgba(232, 207, 138, 0.22), 0 -20px 40px rgba(0, 0, 0, 0.45);
 }
 
+/* a lantern standing on the table, its flame never quite still */
+.lantern{
+  position: absolute;
+  left: 10%;
+  top: 5vh;
+  width: clamp(18px, 2vw, 30px);
+  aspect-ratio: 3 / 5;
+  transform: translateY(-100%);
+  border: 2px solid #2a1a10;
+  border-top-width: 5px;
+  border-radius: 3px 3px 2px 2px;
+  background: radial-gradient(ellipse at 50% 60%, #ffe2a0 0 18%, #f0a24a 40%, #7a3d18 80%);
+  box-shadow: 0 0 18px 4px rgba(255, 170, 80, 0.5);
+  animation: flame 2.6s ease-in-out infinite;
+}
+.lantern::after{
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14vw;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 90, 0.22), transparent 65%);
+  pointer-events: none;
+}
+@keyframes flame{
+  0%, 100%{ filter: brightness(1); }
+  20%{ filter: brightness(1.15); }
+  35%{ filter: brightness(0.92); }
+  60%{ filter: brightness(1.08); }
+  80%{ filter: brightness(0.96); }
+}
+
 @media (max-width: 880px){
-  .dragon{ right: 3%; height: min(10vh, 90px); }
+  .dragon{ right: 2%; height: min(8vh, 72px); }
+  .lantern{ left: 6%; }
+  .label{ padding: 7px 10px; }
 }
 
 /* ── camera ────────────────────────────────────────────────── */
@@ -160,7 +374,8 @@
 /* looking down at the book: near layers travel further than far ones */
 [data-stage='book'] .sky,
 [data-stage='book'] .auraLayer{ transform: translateY(-18vh); filter: brightness(0.55); }
-[data-stage='book'] .far{ transform: translateY(-26vh); filter: brightness(0.5); }
+[data-stage='book'] .far,
+[data-stage='book'] .district{ transform: translateY(-26vh); filter: brightness(0.5); }
 [data-stage='book'] .near{ transform: translateY(-34vh); filter: brightness(0.5); }
 [data-stage='book'] .railing{ transform: translateY(-62vh); }
 [data-stage='book'] .table{ transform: translateY(-76vh); }

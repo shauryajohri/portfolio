@@ -24,6 +24,7 @@ import s from './Experience.module.css';
 export type Stage = 'intro' | 'view' | 'book' | 'universe';
 
 const INTRO_KEY = 'intro-seen';
+const UNKNOWN_CHAPTER = CHAPTERS.findIndex((c) => c.id === 'unknown');
 const EYES_OPEN_MS = 2300;  // eyelids finish → the view
 const LOOK_DOWN_MS = 3400;  // the camera tilts down to the book
 
@@ -131,6 +132,7 @@ export default function Experience() {
   }, [index]);
 
   // Keyboard: ← → turn pages, ↑ look up, ↓ read, Esc leaves a universe.
+  // (In the view, Tab walks the kingdom's places; Enter on one enters it.)
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (record || e.altKey || e.ctrlKey || e.metaKey) return;
@@ -145,7 +147,7 @@ export default function Experience() {
         const atTop = (frameRef.current?.scrollTop ?? 0) === 0 && (pageRef.current?.scrollTop ?? 0) === 0;
         if (e.key === 'ArrowUp' && atTop) lookUp();
       }
-      if (st === 'view' && (e.key === 'ArrowDown' || e.key === 'Enter')) read();
+      if (st === 'view' && e.key === 'ArrowDown') read();
       if (st === 'universe' && e.key === 'Escape') leave();
     };
     addEventListener('keydown', onKey);
@@ -163,7 +165,7 @@ export default function Experience() {
       style={style}
       onPointerDown={stage === 'intro' ? read : undefined}
     >
-      <Scene />
+      <Scene onEnter={enter} onPlanned={() => go(UNKNOWN_CHAPTER)} />
 
       <div className={s.bookLayer}>
         <div className={s.tableBook} onClick={stage === 'view' ? read : undefined}>
