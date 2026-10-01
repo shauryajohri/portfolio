@@ -17,7 +17,7 @@ export const PROJECTS: Project[] = [
       'An intelligent desktop AI companion — voice, memory, multi-model routing and proactive assistance in one application.',
     category: 'AI Desktop Assistant',
     chapter: 'world',
-    scene: 'A wizard-tech tower wrapped in cosmic energy',
+    scene: 'A black hole that remembers everything it pulls in',
     overview:
       "AURA goes beyond a traditional chatbot. It combines voice interaction, long-term memory, multi-model AI routing and proactive assistance into a unified desktop application. Instead of waiting for user prompts, AURA observes context, remembers past interactions, and intelligently assists throughout the workflow. It isn't trying to replace your tools — it's designed to connect them.",
     problem:
@@ -486,3 +486,6 @@ export const getProject = (id: string) => PROJECTS.find((p) => p.id === id);
 export const WORLDS = PROJECTS.filter((p) => p.chapter === 'world');
 export const TALES = PROJECTS.filter((p) => p.chapter === 'tale');
 export const UNWRITTEN = PROJECTS.filter((p) => p.chapter === 'unknown');
+
+/** Worlds and Lesser Tales have a universe to enter; The Unknown does not yet. */
+export const canEnter = (p: Project) => p.chapter !== 'unknown';

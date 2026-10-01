@@ -1,7 +1,7 @@
 /* ============================================================
    THE BOOK'S CHAPTERS — order here is the reading order.
-   `plate` is the illustration on the left page. Until the art
-   exists (final stage), the plate renders its caption instead.
+   The left page of each spread is the chapter opener: title,
+   subtitle, an epigraph, and (final stage) a small ink sketch.
    ============================================================ */
 
 export interface Chapter {
@@ -11,11 +11,10 @@ export interface Chapter {
   subtitle: string;
   /** Plain label for the table of contents and screen readers. */
   label: string;
-  plate: {
-    caption: string;
-    /** Path under /public once the illustration exists. */
-    image?: string;
-  };
+  /** One italic line under the title on the opener page. */
+  epigraph: string;
+  /** Ink sketch under /public, once it exists. */
+  sketch?: string;
 }
 
 export const CHAPTERS: Chapter[] = [
@@ -25,10 +24,7 @@ export const CHAPTERS: Chapter[] = [
     title: 'Prologue',
     subtitle: 'The Invitation',
     label: 'About',
-    plate: {
-      caption:
-        'An academy on high ground. Shaurya and the dragon overlook a distant, glowing city.',
-    },
+    epigraph: 'Every great story begins with an idea.',
   },
   {
     id: 'forge',
@@ -36,9 +32,7 @@ export const CHAPTERS: Chapter[] = [
     title: 'The Forge',
     subtitle: 'Tools forged through building',
     label: 'Skills',
-    plate: {
-      caption: 'A great forge. Technologies rest on the anvil as tools, not weapons.',
-    },
+    epigraph: 'No tool here was learned for its own sake.',
   },
   {
     id: 'creations',
@@ -46,9 +40,7 @@ export const CHAPTERS: Chapter[] = [
     title: 'The Creations',
     subtitle: 'Worlds that were built',
     label: 'Projects',
-    plate: {
-      caption: 'A tower wrapped in cosmic energy; beyond it, a connected city of light.',
-    },
+    epigraph: 'Look up — every one of them is out there.',
   },
   {
     id: 'trials',
@@ -56,9 +48,7 @@ export const CHAPTERS: Chapter[] = [
     title: 'The Trials',
     subtitle: 'The road so far',
     label: 'Experience',
-    plate: {
-      caption: 'A long mountain path. Milestones stand along it like old waystones.',
-    },
+    epigraph: 'Milestones, set down plainly.',
   },
   {
     id: 'unknown',
@@ -66,9 +56,7 @@ export const CHAPTERS: Chapter[] = [
     title: 'The Unknown',
     subtitle: 'Some chapters are still being written',
     label: 'Now',
-    plate: {
-      caption: 'An enormous sealed gate. Faint light leaks through the seams.',
-    },
+    epigraph: 'The unlit towers on the horizon are next.',
   },
   {
     id: 'next',
@@ -76,8 +64,6 @@ export const CHAPTERS: Chapter[] = [
     title: 'The Next Chapter',
     subtitle: 'The story doesn’t end here',
     label: 'Contact',
-    plate: {
-      caption: 'The final page, open toward a sunrise. The dragon watches the horizon.',
-    },
+    epigraph: 'Let’s build what’s next.',
   },
 ];

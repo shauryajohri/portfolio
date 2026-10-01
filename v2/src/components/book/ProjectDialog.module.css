@@ -122,6 +122,7 @@
 
 .links{
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
   padding-top: 26px;
 }
@@ -135,6 +136,15 @@
   color: var(--parchment);
 }
 .links a:hover{ background: #3d2758; }
+.links .enter{
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--gold);
+  color: var(--night);
+}
+.links .enter:hover{ background: var(--gold-lt); }
 
 @media (max-width: 520px){
   .stack div{ grid-template-columns: 1fr; gap: 0; }

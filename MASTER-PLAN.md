@@ -1,41 +1,45 @@
 # Shaurya Johri — Portfolio Master Plan
 
-**Status:** Phase 1 built in `v2/` (readable book, no art). Images deferred to the final stage.
-**Last updated:** 25 September 2026
+**Status:** Concept v3 — *The Balcony*. Phase A built (1 Oct 2026); Phase B next.
+**Last updated:** 1 October 2026
 
 ---
 
 ## 1. Core vision
 
-The portfolio is **one living book**: *The Journey of Shaurya Johri.* The visitor reads the story of the developer behind the work. The book is the navigation. Shaurya and his dragon companion travel through its pages.
+The visitor **becomes Shaurya**. They open their eyes on a balcony at dusk, overlooking a kingdom. Everything Shaurya has built is visible from here: **AURA** as a black hole in the sky, the **SmartConnect metaverse** as the kingdom ahead, and the smaller projects as buildings within it. A dragon rests on the railing.
 
-> "A beautifully illustrated fantasy novel that happens to contain a modern software engineer's portfolio."
+On the table in front of them lies a book — *The Journey of Shaurya Johri*. They look down, it opens, and they read: who he is, what he built, his experience, his achievements. Any project can be **entered**: the camera dives from the balcony into that project's universe, and pulls back out when they return.
 
-**Fantasy is the presentation layer. Engineering is the substance.**
+> **The view is the map. The book is the substance. The universes are the reward for curiosity.**
 
 After 3–5 minutes the visitor knows: who Shaurya is · what he builds · his stack · his strongest projects · his experience · what he's building now · how to contact him.
 
+### Two audiences, one scene
+| Audience | Path |
+|---|---|
+| Recruiter | Eyes open (~3s) → book → reads, downloads resume, leaves. Never has to touch the view. |
+| Curious dev / hiring manager | Looks up, hovers the sky and kingdom, enters AURA's universe, comes back, enters another. |
+
 ### It is NOT
-A game UI · a card-grid portfolio · an open world · an MMORPG · a generic cyberpunk site · a resume with fantasy graphics pasted on.
+A game UI · an open world · explorable 3D levels · a card-grid portfolio · a resume with fantasy graphics pasted on.
 
 ---
 
 ## 2. Design language
 
-- Medieval fantasy book · cinematic fantasy environments · subtle futuristic tech
-- Deep purple / midnight blue atmosphere, warm parchment and gold accents
-- Elegant modern typography, premium cinematic lighting, restrained magical particles, restrained UI
-- Fantasy elements are **metaphors for real engineering work**
-
-Feels: cinematic · mysterious · warm · premium · intelligent · minimal · memorable.
+- Medieval fantasy kingdom at dusk · a cosmic black hole overhead · subtle futuristic technology in the kingdom
+- Deep purple / midnight atmosphere; warm parchment and gold in the book and lanterns
+- Cinematic, calm, premium, mysterious — never childish, never MMORPG
+- Fantasy is the presentation; engineering is the substance
 
 ### Principles
 1. **Recruiter never struggles** to find name, role, projects, skills, experience, resume, GitHub, LinkedIn, contact.
-2. **No gates.** Nothing blocks content behind an interaction or an animation.
-3. **All content is real HTML text.** 3D/illustration sits behind it as atmosphere, never as the carrier of information.
-4. **Short transitions.** Nobody watches a long animation twice.
-5. **Every interaction is purposeful** — open, turn, inspect, contact. No mini-games, no random particle toys, no free-roam.
-6. The visitor always knows where they are and how to continue.
+2. **No gates.** The intro plays itself, is skippable, and doesn't replay within a session.
+3. **All information is real HTML text** — in the book and in each universe. Art is atmosphere, never the carrier of information.
+4. **Short transitions.** Intro ≤ ~4s; look up/down ≤ ~1s; entering a universe ≤ ~1.5s.
+5. **Every interaction is purposeful:** read, turn, look up, enter, return, contact.
+6. The visitor always knows where they are and how to get back to the book.
 
 ---
 
@@ -43,139 +47,163 @@ Feels: cinematic · mysterious · warm · premium · intelligent · minimal · m
 
 | # | Decision | Rationale |
 |---|---|---|
-| D1 | **Rewrite on Next.js + React + TypeScript + R3F.** | Book-open 3D moment, page transitions and chapter state aren't maintainable in the vanilla site. |
-| D2 | **Book concept replaces the old plan entirely.** Katana, sakura, Japanese greeting, rest scene, Engineering District and Experience Mode are dropped. | Old concept rejected. |
-| D3 | **Only one real 3D moment:** the book opening and the pages rising into a world. | Scope. It's the signature — spend the budget there. |
-| D4 | **Chapters are illustrated 2.5D parallax scenes**, not 3D environments. | Fits "illustrated novel" better; achievable solo; avoids half-finished 3D. |
-| D5 | **Character + dragon are illustrated poses per chapter**, not rigged animated models. Light motion (breathing, wing shift, parallax) only. | Rigged 3D characters are the highest-risk asset; poses keep quality high. |
-| D6 | **The cover never blocks.** It auto-opens after ~2s, and the cover itself already shows name, role, Resume, GitHub, Contact. "Skip to contents" always available. | Principle 2. |
-| D7 | **Dragon = black fantasy dragon companion** (Kaisel-inspired). Expressive, intelligent, friendly; never dominates the frame. | Fits medieval fantasy natively. |
-| D8 | **Mobile = single page, swipe to turn.** Desktop = open two-page spread. | An open book is landscape; phones are portrait. Designed from day one, not retrofitted. |
+| D1 | **Next.js + React + TypeScript.** Existing `v2/` app is the base. | Already built; book, content and records carry over. |
+| D2 | **First-person camera — the visitor is Shaurya.** No full-body character on screen; at most his hands on the book. | Removes the hardest art problem (keeping one character consistent across many images). "Opening eyes" only makes sense in first person. *Reversible — see Q1.* |
+| D3 | **Dragon rests on the balcony railing.** One pose, subtle idle motion, reacts when the visitor looks up or enters a universe. | Keeps the signature companion for the cost of one image. *Reversible — see Q2.* |
+| D4 | **The scene is layered 2.5D, not a 3D world.** One painting split into depth layers; the "camera" pans/zooms/tilts across them. | Buildable solo, fast on phones, looks painted rather than half-finished 3D. |
+| D5 | **One WebGL effect only: the AURA black hole** (shader: lensing + accretion glow). Loaded lazily. | The signature visual. Everything else is images + CSS/GSAP. |
+| D6 | **The book is a real web page shown in perspective on the table.** Text stays sharp, selectable, searchable, accessible. | Principle 3. |
+| D7 | **Universes are cinematic project pages, not explorable worlds.** Full-screen art + short entry animation + the engineering record over it. | Scope. AURA gets the bespoke treatment; the rest share one template. |
+| D8 | **Two ways into a project:** "Enter its world" in the book, or clicking it in the view. | Recruiters use the book; the curious use the sky. |
+| D9 | **Mobile = portrait look-up / look-down.** View at the top, table and book below; swipe to turn pages. | Portrait suits looking up and down naturally. |
+| D10 | **Images are the last stage.** Everything is built and working with placeholders first. | User decision; protects the Higgsfield budget. |
 
 ---
 
-## 4. The opening
+## 4. The flow
 
 ```
-Closed ancient book on a dark surface
-  Cover: THE JOURNEY OF / SHAURYA JOHRI
-  "A developer's tale of ideas, systems and worlds yet to be built."
-  Purple glow leaking between the pages
-  [ Open the book ]   ·   small: Resume · GitHub · Contact
-        ↓  (click, or auto after ~2s)
-Book opens → camera orbits → book tilts into 3D perspective
-        ↓
-Pages become a miniature world. Shaurya and the dragon emerge and stand on the book.
-        ↓
-Camera pulls back. The book becomes the world.   ← SIGNATURE MOMENT
-        ↓
-Chapter I
+Black
+  ↓  eyelids open — blur → sharp, a breath of wind          (~2.5s, auto, skippable)
+THE VIEW
+  AURA black hole in the sky · metaverse kingdom ahead · small projects glowing faintly
+  dragon on the railing
+  ↓  camera tilts down to the table                         (~1s, auto on first visit)
+THE BOOK — cover opens
+  ↓
+Chapters, page turns
+  ├── "Look up"  → camera tilts back to the view (explore, hover, click)
+  └── "Enter its world" / click in view
+         ↓  camera dives from the balcony into the project   (~1.5s)
+       THE UNIVERSE — project art + engineering record
+         ↓  "Return to the balcony" — camera pulls back out
+       back to the same page of the book (or the view, if entered from there)
 ```
 
-Plays once per session. Return visits / reduced-motion users land directly on an opened book.
+- Plays the intro once per session. Return visits and deep links (`/#creations`, `/aura`) skip straight to the book or universe.
+- `prefers-reduced-motion`: no eyelids, no camera moves — cross-fades only.
 
 ---
 
-## 5. Chapters
+## 5. The view (the balcony scene)
 
-Target ~3–5 min total. Six chapters (Prologue and The Beginning merged).
+```
+┌───────────────────────────────────────────────┐
+│                 ◉  AURA                        │  sky — black hole, accretion glow (WebGL)
+│        stars · faint cosmic web                │
+├───────────────────────────────────────────────┤
+│   ⌂ Yatra   ⌂ WasabiKiri    ▲ SmartConnect     │  kingdom — the metaverse city ahead,
+│      ⌂ FinGuard  ⌂ Tourist Prediction          │  small projects as distinct buildings
+├───────────────────────────────────────────────┤
+│ railing ── 🐉 dragon                            │  balcony
+│        [ table · book · lantern · cup ]        │  foreground
+└───────────────────────────────────────────────┘
+```
 
-| # | Chapter | Content | Scene |
+- **Layers (back → front):** sky · AURA · far kingdom · near kingdom · balcony/railing · dragon · table + book.
+- **Hotspots:** AURA, SmartConnect, and each small-project building. Hover = soft glow + name label; click = enter.
+- Planned projects (Smart City, WasabiKiri 2.0) appear as **unlit / under-construction** silhouettes on the horizon — honest about status, and a hook for The Unknown.
+- Idle life: drifting clouds, window lights flicker on, dragon breathes, lantern flame.
+
+---
+
+## 6. The book
+
+Same chapters and content as the current `v2/` build. The book now sits on the table instead of filling the screen.
+
+| # | Chapter | Content |
+|---|---|---|
+| I | **Prologue — The Invitation** | Philosophy line, who Shaurya is, education, motivation, the builder he wants to become. |
+| II | **The Forge** | Skills as a book index: tool ····· projects it was used in. |
+| III | **The Creations** | AURA and SmartConnect, then Lesser Tales. Each: summary + **Read the record** + **Enter its world**. |
+| IV | **The Trials** | Timeline path + landmarks (internship, competitions, certifications, research). Factual. |
+| V | **The Unknown** | Currently building · research · future goals · ideas in the vault (planned projects). |
+| VI | **The Next Chapter** | Email · LinkedIn · GitHub · Resume. "Let's build what's next." |
+
+- Left page: short text or a small ink sketch (optional, final stage). No per-chapter scene paintings.
+- Page-turn: the two-sided sheet already built.
+- Persistent controls: **Look up** · **Contents** · **Resume** · **Contact**.
+
+---
+
+## 7. The universes
+
+Each project's universe = full-screen art, a short entry animation, and the engineering record (what it is · problem · what I built · architecture · stack · features · challenges · demo · GitHub) laid over it.
+
+| Project | Entry | Universe | Treatment |
 |---|---|---|---|
-| I | **Prologue — The Invitation** | One-line philosophy ("Every great story begins with an idea."), who Shaurya is, education, motivation, what builder he wants to become. Readable in <30s. | Peaceful academy / elevated landscape; Shaurya and the dragon overlook a distant futuristic city. |
-| II | **The Forge** | Skills in 4–5 categories. Concrete tools only. | Medieval forge; technologies appear as tools/artifacts, not a logo wall. |
-| III | **The Creations** | Strongest projects (see §6). Most important chapter. | Each flagship is its own world. |
-| IV | **The Trials** | Internship, competitions, certifications, research, milestones. Factual, no hero language. | Mountain path; milestones are landmarks along it. |
-| V | **The Unknown** | Currently building · future goals · research. Hints, not riddles. | Enormous gate / locked region. "Some chapters are still being written." |
-| VI | **The Next Chapter** | "The story doesn't end here." Email · LinkedIn · GitHub · Resume. "Let's build what's next." | Final page open toward a sunrise. |
+| **AURA** | Camera dives into the black hole | Inside the event horizon — cosmic UI, planets as models, memory as a starfield | **Bespoke** (built first) |
+| **SmartConnect** | Camera glides down into the kingdom | A living campus city, lit windows, travellers | Template + own art |
+| Yatra AI | Into its building | A living travel map | Template |
+| Tourist Prediction | Into its building | An observatory reading the seasons | Template |
+| WasabiKiri | Into its building | An ancient archive | Template |
+| FinGuard | Into its building | A vault with watchful wards | Template |
+| Smart City, WasabiKiri 2.0 | — | Shown in The Unknown only, not enterable yet | — |
 
-### Forge categories (concrete only)
-- **Languages** — C++, Python, Java, JavaScript
-- **Frontend** — React, Next.js, HTML, CSS
-- **Backend / Systems** — Node.js, FastAPI, named databases (fill from `data.js`)
-- **AI / ML** — LLMs, RAG, named ML libs (fill from `data.js`)
-- **Tools / Cloud** — Git, Docker, named cloud provider
-
-Cut vague entries ("AI", "Cloud", "APIs", "Development tools") — recruiters read them as filler.
+Each universe has its own URL (`/aura`, `/smartconnect`, …) so it can be linked directly and indexed.
 
 ---
 
-## 6. The Creations — project mapping
+## 8. Build phases
 
-| Project (`data.js`) | Status | Treatment | World |
-|---|---|---|---|
-| AURA | WIP · Flagship | **Full world** | Wizard-tech tower in cosmic energy — AI, memory, voice, automation |
-| SmartConnect | Planned | **Full world** | Futuristic connected city — metaverse / multiplayer |
-| Yatra AI | Done | Lesser Tales | Living travel map |
-| Tourist Prediction | Done | Lesser Tales | Observatory reading the seasons |
-| WasabiKiri | Done | Lesser Tales | Ancient digital archive |
-| FinGuard | Done | Lesser Tales | Vault with watchful wards |
-| Smart City Digital Twin | Planned | The Unknown (vault) | Kingdom mirrored in glass |
-| WasabiKiri 2.0 | Planned | The Unknown (vault) | The archive, being rebuilt |
+### Phase A — Scene shell *(built)*
+Four stages (`intro · view · book · universe`) on one root attribute; the camera is CSS transitions per layer (no GSAP needed). Eyes-open intro (~2.3s, skippable by any click/key, once per session). Look up / look down (bar button, ↑/↓, or click the book). Book lies on the table in perspective, closed cover opens on first look down. Chapter opener on the left page. Enter its world → camera dives toward the project, book drops away, placeholder universe with the record; Esc/Return comes back to the same page. Phone layout: same scene in portrait, single-page book.
 
-Set per project via `chapter` in `v2/src/data/projects.ts`.
+### Phase B — The view *(next)*
+Hotspots with hover labels on AURA, SmartConnect and each small-project building (positions in `v2/src/data/view.ts`) · unlit planned buildings · dragon reactions (on look up / enter) · idle ambient motion (window lights, clouds, lantern).
 
-**Lesser Tales** = one illustrated spread holding the smaller projects, each with a small vignette. Keeps the chapter short.
+### Phase C — Universes
+Universe template (art slot + record + return) · routes per project · enter/return camera transitions · AURA black hole shader and dive.
 
-### Project panel (every project)
-Opens as a clean, professional panel — no fantasy language inside:
-what it is · problem · what Shaurya built · architecture · technologies · features · challenges · demo · GitHub.
+### Phase D — Polish
+Audio (optional, muted by default) · reduced-motion pass · performance (lazy WebGL, image sizes) · accessibility pass · SEO/meta per universe.
 
-⚠️ SmartConnect and Smart City are **Planned**. Showing a planned project as a full world in "Creations" overclaims — either ship something demoable first or move it to Chapter V (The Unknown).
+### Phase E — Art *(last)*
+Swap placeholders for real images. No code changes needed beyond file paths in data.
+
+### Carried over from the current build
+Book component, page turns, chapter content, project records, navigation, keyboard/swipe, deep links, data files.
+**Dropped:** the six per-chapter plate scenes and the walking cast (uncommitted Phase 2 work).
 
 ---
 
-## 7. Navigation
+## 9. Art list (Phase E)
 
-- **Primary:** the book. Page turn / next-chapter control; Shaurya and the dragon shift position, short camera move, next scene appears. **Transition ≤ ~1s.**
-- **Chapter indicator:** small, always visible (e.g. ribbon bookmark with I–VI).
-- **Secondary / accessibility:** a table-of-contents menu with plain labels (About, Skills, Projects, Experience, Now, Contact) + keyboard arrows + deep links (`/#creations`).
-- **Persistent:** Resume and Contact reachable from every page.
-- `prefers-reduced-motion`: cross-fades only, no camera moves.
+| # | Asset | Notes |
+|---|---|---|
+| 1 | Balcony view — sky layer | Stars, cosmic web, dusk gradient. AURA itself is the shader. |
+| 2 | Balcony view — kingdom layers (far, near) | SmartConnect city + distinct buildings for each small project + unlit planned ones. Transparent. |
+| 3 | Balcony — railing, table, book, lantern | Foreground, transparent. |
+| 4 | Dragon on the railing | One pose, transparent. |
+| 5 | AURA universe | Bespoke. |
+| 6–10 | SmartConnect, Yatra, Tourist Prediction, WasabiKiri, FinGuard universes | One each. |
 
----
-
-## 8. Characters
-
-- **Shaurya** — young modern developer/adventurer. Calm, curious, intelligent, ambitious. Not a superhero.
-- **Dragon** — black, expressive, friendly. Reacts subtly on chapter changes. Never steals the frame.
-
----
-
-## 9. Phased roadmap
-
-### Phase 1 — The readable book *(built — needs real content: education, LinkedIn, resume PDF)*
-Next.js scaffold · book layout (spread desktop / single page mobile) · all six chapters as **text + static illustration** · project panels · ToC nav · Resume/Contact. Content pulled from `data.js`.
-Must be a complete, excellent portfolio with **zero 3D**. This alone is shippable.
-
-### Phase 2 — Illustration & motion
-Final chapter art · character/dragon poses · 2.5D parallax · page-turn transitions.
-
-### Phase 3 — The signature opening
-3D book open → tilt → pages become the world → characters emerge → pull back.
+~10 finals, ~30 generations with retries. Order: lock the style with #1–3 first, then the rest reference them.
 
 ---
 
 ## 10. Open questions
 
-| # | Question | Blocks |
+| # | Question | Default until answered |
 |---|---|---|
-| Q1 | Art source: commission an illustrator, AI-generate and paint over, or hand-build? Consistency of Shaurya and the dragon across 6 scenes is the hard part. | Phase 2 |
-| Q2 | Character outfit: modern dev clothes, fantasy traveller, or the black suit? | Phase 2 art |
-| Q3 | Audio at all? If yes: muted by default with unmute toggle (browsers block autoplay audio). | Phase 2 |
-| Q4 | SmartConnect / Smart City — Creations or The Unknown? (§6 warning) | Phase 1 content |
-| Q5 | FinGuard — Lesser Tales or cut? | Phase 1 content |
-| Q6 | Does the current vanilla site stay live during the rewrite? | Phase 1 setup |
+| Q1 | Camera: first-person (visitor is Shaurya) or over-the-shoulder (we see him in the chair)? | First-person (D2) |
+| Q2 | Keep the dragon? | Yes, on the railing (D3) |
+| Q3 | Audio: none, or ambient wind/city muted by default with an unmute toggle? | None until Phase D |
+| Q4 | Art source: Higgsfield generation, illustrator, or mixed? | Higgsfield, final stage |
+| Q5 | Does the old vanilla site at the repo root stay live until v2 ships? | Yes |
+
+### Content still missing (blocks launch, not building)
+Resume PDF (`v2/public/resume.pdf`) · LinkedIn URL · education · real names/dates for internship and certifications.
 
 ---
 
 ## 11. Technical stack
 
-- **Framework** — Next.js, React, TypeScript
-- **Animation** — GSAP (or Framer Motion) for page transitions and parallax
-- **3D** — Three.js / React Three Fiber, **opening sequence only**
-- **Models** — Blender (book only)
+- **Framework** — Next.js (App Router), React, TypeScript
+- **Motion** — CSS transitions/keyframes for the camera, intro, idle loops and page turns (GSAP only if Phase C needs sequenced timelines)
+- **WebGL** — one lazy-loaded shader for the AURA black hole (raw WebGL or a minimal Three.js scene)
+- **Images** — layered WebP with transparency
 
 ### Repo state
-- `v2/` — the book (Next.js). Old katana prologue and rest scene deleted.
-- Root `index.html` + `assets/` — the old vanilla site, kept live until v2 ships (Q6).
+- `v2/` — the Next.js app (branch `book-redesign`). Phase A built on top of the Phase 1 book; Phase 2 plates/walking cast removed.
+- Root `index.html` + `assets/` — the old vanilla site.

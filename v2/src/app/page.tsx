@@ -1,5 +1,5 @@
-import Book from '@/components/book/Book';
+import Experience from '@/components/Experience';
 
 export default function Home() {
-  return <Book />;
+  return <Experience />;
 }

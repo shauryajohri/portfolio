@@ -1,0 +1,121 @@
+/* ═══════════════════════════════════════════════════════════════
+   STAGES & CAMERA (book side)
+   The scene's layers live in scene/Scene.module.css. Here: the book
+   lying on the table (intro/view), lifted in front of the reader
+   (book), dropped away (universe) — plus the eyelids.
+   ═══════════════════════════════════════════════════════════════ */
+
+.experience{
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: var(--night);
+}
+/* first paint for return visits: jump straight to the book, no tweens */
+.experience[data-instant] *,
+.experience[data-instant] *::before,
+.experience[data-instant] *::after{ transition: none !important; }
+
+.bookLayer{
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  perspective: 1400px;
+  perspective-origin: 50% 35%;
+  pointer-events: none;
+}
+
+.tableBook{
+  position: absolute;
+  inset: 0;
+  pointer-events: auto;
+  transform-origin: 50% 50%;
+  transition: transform 1.1s var(--ease), opacity 0.8s ease, filter 0.3s;
+}
+
+.frame{
+  position: absolute;
+  inset: 0;
+  padding: 72px clamp(16px, 3vw, 40px) 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.frame:focus{ outline: none; }
+
+/* looking out: the book lies on the table, small and foreshortened */
+.experience[data-stage='intro'] .tableBook,
+.experience[data-stage='view'] .tableBook{
+  transform: translateY(43vh) rotateX(62deg) scale(0.36);
+}
+.experience[data-stage='view'] .tableBook{ cursor: pointer; }
+.experience[data-stage='view'] .tableBook:hover{ filter: brightness(1.12); }
+
+/* entering a universe: the book falls away below the frame */
+.experience[data-stage='universe'] .tableBook{
+  transform: translateY(80vh) rotateX(62deg) scale(0.36);
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ── eyelids (first visit) ─────────────────────────────────── */
+
+.eyelids{
+  position: absolute;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+.lidTop,
+.lidBottom{
+  position: absolute;
+  left: -15%;
+  right: -15%;
+  height: 62%;
+  background: #000;
+  box-shadow: 0 0 80px 50px #000;
+  animation: 2.2s cubic-bezier(0.6, 0, 0.25, 1) 0.25s both;
+}
+.lidTop{
+  top: 0;
+  border-radius: 0 0 50% 50% / 0 0 38% 38%;
+  animation-name: lidTop;
+}
+.lidBottom{
+  bottom: 0;
+  border-radius: 50% 50% 0 0 / 38% 38% 0 0;
+  animation-name: lidBottom;
+}
+/* open a little, a slow blink, then fully open */
+@keyframes lidTop{
+  0%{ transform: translateY(0); }
+  28%{ transform: translateY(-34%); }
+  42%{ transform: translateY(-12%); }
+  100%{ transform: translateY(-125%); }
+}
+@keyframes lidBottom{
+  0%{ transform: translateY(0); }
+  28%{ transform: translateY(34%); }
+  42%{ transform: translateY(12%); }
+  100%{ transform: translateY(125%); }
+}
+
+/* ── single-page (phones) ──────────────────────────────────── */
+
+@media (max-width: 880px){
+  .frame{
+    display: block;
+    overflow-y: auto;
+    padding: 64px 12px 0;
+  }
+  .experience:not([data-stage='book']) .frame{ overflow: hidden; }
+  .experience[data-stage='intro'] .tableBook,
+  .experience[data-stage='view'] .tableBook{
+    transform: translateY(46vh) rotateX(56deg) scale(0.62);
+  }
+  .experience[data-stage='universe'] .tableBook{
+    transform: translateY(90vh) rotateX(56deg) scale(0.62);
+  }
+}

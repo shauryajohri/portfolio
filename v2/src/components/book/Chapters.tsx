@@ -9,17 +9,18 @@ import s from './Book.module.css';
 interface Props {
   id: string;
   onOpenProject: (p: Project) => void;
-  onClose: () => void;
+  onEnter: (p: Project) => void;
+  onLookUp: () => void;
 }
 
-export default function ChapterBody({ id, onOpenProject, onClose }: Props) {
+export default function ChapterBody({ id, onOpenProject, onEnter, onLookUp }: Props) {
   switch (id) {
     case 'prologue': return <Prologue />;
     case 'forge': return <Forge />;
-    case 'creations': return <Creations onOpen={onOpenProject} />;
+    case 'creations': return <Creations onOpen={onOpenProject} onEnter={onEnter} />;
     case 'trials': return <Trials />;
     case 'unknown': return <Unknown onOpen={onOpenProject} />;
-    case 'next': return <NextChapter onClose={onClose} />;
+    case 'next': return <NextChapter onLookUp={onLookUp} />;
     default: return null;
   }
 }
@@ -29,7 +30,6 @@ export default function ChapterBody({ id, onOpenProject, onClose }: Props) {
 function Prologue() {
   return (
     <div className={s.body}>
-      <p className={s.epigraph}>“{PROFILE.philosophy}”</p>
       <p className={s.lead}>
         <span className={s.dropcap}>{PROFILE.intro[0]}</span>
         {PROFILE.intro.slice(1)}
@@ -97,7 +97,7 @@ function Forge() {
 
 /* ── III · The Creations ──────────────────────────────────── */
 
-function Creations({ onOpen }: { onOpen: (p: Project) => void }) {
+function Creations({ onOpen, onEnter }: { onOpen: (p: Project) => void; onEnter: (p: Project) => void }) {
   return (
     <div className={s.body}>
       {WORLDS.map((p) => (
@@ -106,9 +106,12 @@ function Creations({ onOpen }: { onOpen: (p: Project) => void }) {
           <h2 id={`w-${p.id}`} className={s.worldName}>{p.name}</h2>
           <p className={s.meta}>{p.category} · <Status p={p} /></p>
           <p>{p.tagline}</p>
-          <button className={s.readMore} onClick={() => onOpen(p)}>
-            Read the full record <span aria-hidden="true">→</span>
-          </button>
+          <div className={s.actions}>
+            <button className={s.readMore} onClick={() => onOpen(p)}>Read the record</button>
+            <button className={`${s.readMore} ${s.enterWorld}`} onClick={() => onEnter(p)}>
+              Enter its world <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </section>
       ))}
 
@@ -194,7 +197,7 @@ function Unknown({ onOpen }: { onOpen: (p: Project) => void }) {
 
 /* ── VI · The Next Chapter ────────────────────────────────── */
 
-function NextChapter({ onClose }: { onClose: () => void }) {
+function NextChapter({ onLookUp }: { onLookUp: () => void }) {
   const actions = [
     { label: 'Email', value: LINKS.email, href: `mailto:${LINKS.email}` },
     LINKS.linkedin && { label: 'LinkedIn', value: 'Connect', href: LINKS.linkedin },
@@ -223,8 +226,7 @@ function NextChapter({ onClose }: { onClose: () => void }) {
           </li>
         ))}
       </ul>
-      <p className={s.epigraph}>Let’s build what’s next.</p>
-      <button className={s.readMore} onClick={onClose}>Close the book</button>
+      <button className={s.readMore} onClick={onLookUp}>Look up at the kingdom</button>
     </div>
   );
 }

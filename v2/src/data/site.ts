@@ -4,8 +4,6 @@ export const PROFILE = {
   name: 'Shaurya Johri',
   role: 'Software Developer · AI Engineer',
   status: 'Open to internships and collaborations',
-  /** Chapter I opener. */
-  philosophy: 'Every great story begins with an idea.',
   intro:
     'Shaurya Johri is a software developer who builds intelligent systems — desktop AI, machine-learning pipelines and real-time 3D worlds.',
   /** Leave empty to hide. Degree · institution · years. */
